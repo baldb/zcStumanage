@@ -1,4 +1,11 @@
 module.exports = {
+  configureWebpack: {
+    resolve: {
+      alias: {
+        assets: '@/assets',
+      },
+    },
+  },
   devServer: {
     proxy: {
       '/api': {

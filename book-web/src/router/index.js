@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const Home = () => import('../components/HelloWord.vue')
-
 // 1.安装插件
 Vue.use(VueRouter)
 
@@ -10,11 +8,33 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '',
-    redirect: '/home',
+    redirect: '/passed',
   },
   {
-    path: '/home',
-    component: Home,
+    path: '/passpot',
+    component: () => import('@/layout/passport/PassPort'),
+    children: [
+      {
+        path: '',
+        redirect: 'login',
+      },
+      {
+        path: 'login',
+        component: () => import('@/layout/passport/components/Login'),
+      },
+      {
+        path: 'forgotpwd',
+        component: () => import('@/layout/passport/components/Forgotpwd'),
+      },
+    ],
+  },
+  {
+    path: '/passed',
+    component: () => import('@/layout/default/Main'),
+  },
+  {
+    path: '*',
+    component: () => import('@/views/404'),
   },
 ]
 const router = new VueRouter({
