@@ -39,11 +39,14 @@
 
           <el-checkbox v-model="checked">记住密码</el-checkbox>
         </div>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
+        <div class="submit-btn">
+          <el-button
+            type="primary"
+            @click="submitForm('ruleForm')"
+            style="width: 150px"
             >登录</el-button
           >
-        </el-form-item>
+        </div>
       </el-form>
     </div>
   </div>
@@ -124,5 +127,10 @@ export default {
   background-color: #35abed;
   color: #ffffff;
   cursor: pointer;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  text-align: center;
 }
 </style>
