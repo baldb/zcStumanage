@@ -5,44 +5,47 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 // 2.创建router
-const routes = [
-  {
-    path: '',
-    redirect: '/passed',
-  },
-  {
-    path: '/passpot',
-    component: () => import('@/layout/passport/PassPort'),
-    children: [
-      {
+const routes = [{
         path: '',
-        redirect: 'login',
-      },
-      {
-        path: 'login',
-        component: () => import('@/layout/passport/components/Login'),
-      },
-      {
-        path: 'forgotpwd',
-        component: () => import('@/layout/passport/components/Forgotpwd'),
-      },
-    ],
-  },
-  {
-    path: '/passed',
-    component: () => import('@/layout/default/Main'),
-  },
-  {
-    path: '*',
-    component: () => import('@/views/404'),
-  },
+        redirect: '/passpot',
+    },
+    {
+        path: '/passpot',
+        component: () =>
+            import ('@/layout/passport/PassPort'),
+        children: [{
+                path: '',
+                redirect: 'login',
+            },
+            {
+                path: 'login',
+                component: () =>
+                    import ('@/layout/passport/components/Login'),
+            },
+            {
+                path: 'forgotpwd',
+                component: () =>
+                    import ('@/layout/passport/components/Forgotpwd'),
+            },
+        ],
+    },
+    {
+        path: '/passed',
+        component: () =>
+            import ('@/layout/default/Main'),
+    },
+    {
+        path: '*',
+        component: () =>
+            import ('@/views/404'),
+    },
 ]
 const router = new VueRouter({
-  routes,
-  // mode: 'hash'
+    routes,
+    // mode: 'hash'
 
-  mode: 'history',
-  // base:'/'
+    mode: 'history',
+    // base:'/'
 })
 
 export default router
