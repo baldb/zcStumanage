@@ -1,51 +1,60 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 // 1.安装插件
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 // 2.创建router
 const routes = [{
-        path: '',
-        redirect: '/passpot',
+        path: "",
+        redirect: "/passpot",
     },
     {
-        path: '/passpot',
+        // 登录
+        path: "/passpot",
         component: () =>
-            import ('@/layout/passport/PassPort'),
+            import ("@/layout/passport/PassPort"),
         children: [{
-                path: '',
-                redirect: 'login',
+                path: "",
+                redirect: "login",
             },
             {
-                path: 'login',
+                path: "login",
                 component: () =>
-                    import ('@/layout/passport/components/Login'),
+                    import ("@/layout/passport/components/Login"),
             },
             {
-                path: 'forgotpwd',
+                path: "forgotpwd",
                 component: () =>
-                    import ('@/layout/passport/components/Forgotpwd'),
+                    import ("@/layout/passport/components/Forgotpwd"),
             },
         ],
     },
     {
-        path: '/passed',
+        // 登录成功
+        path: "/passed",
         component: () =>
-            import ('@/layout/default/Main'),
+            import ("@/layout/default/Main"),
+        children: [{
+                path: "",
+                redirect: "home",
+            },
+            { path: "home", component: () =>
+                    import ("@/views/home/Home") },
+        ],
     },
     {
-        path: '*',
+        path: "*",
         component: () =>
-            import ('@/views/404'),
+            import ("@/views/404"),
     },
-]
+];
 const router = new VueRouter({
     routes,
     // mode: 'hash'
 
-    mode: 'history',
+    mode: "history",
     // base:'/'
-})
+});
 
-export default router
+export default router;

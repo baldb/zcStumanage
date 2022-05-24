@@ -80,7 +80,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$router.push('/')
+          console.log(this.$router)
+          this.$router.push('/passed')
         } else {
           return false
         }
