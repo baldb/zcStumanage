@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'login',
   data() {
@@ -80,8 +81,14 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.$router)
-          this.$router.push('/passed')
+           axios.get('/api/user/login',{params: {
+                name: 'linyi',
+                password: '123456'
+            }}).then(()=>{
+ this.$router.push('/passed')
+            })
+            
+         
         } else {
           return false
         }

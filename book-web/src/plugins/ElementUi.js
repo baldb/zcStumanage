@@ -11,6 +11,12 @@ import {
     Header,
     Main,
     Footer,
+    Row,
+    Col,
+    Menu,
+    MenuItemGroup,
+    MenuItem,
+    Submenu,
 } from "element-ui";
 
 Vue.use(Button);
@@ -23,4 +29,12 @@ Vue.use(Aside);
 Vue.use(Header);
 Vue.use(Main);
 Vue.use(Footer);
+
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItemGroup);
+Vue.use(MenuItem);
+
 Vue.prototype.$message = Message;
