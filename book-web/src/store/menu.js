@@ -9,12 +9,18 @@ const hashpermissionRoute = (route, indentity) => {
   return false
 }
 
-const filterAsyncRouter = (router, indentity) => {
+const filterAsyncRouter = (router, indentity, basePath = '') => {
   const accessedRouters = router.filter((route) => {
+    Object.assign(route, { path: basePath + route.path })
+    // route.path =
     // 判断权限是否存在
     if (hashpermissionRoute(route, indentity)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, indentity)
+        route.children = filterAsyncRouter(
+          route.children,
+          indentity,
+          route.path + '/'
+        )
       }
       return true
     }

@@ -8,8 +8,9 @@
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
       :collapse-transition="false"
+      router
     >
-      <sider-item />
+      <sider-item v-for="(item, index) in menu" :key="index" :item="item" />
     </el-menu>
 
     <div class="menu-fot" @click="hideMenu">

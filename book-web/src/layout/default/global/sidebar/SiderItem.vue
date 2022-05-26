@@ -1,41 +1,37 @@
 <template>
-  <div>
-    <el-submenu index="1">
+  <span v-if="isShow">
+    <el-menu-item v-if="!item.children" :index="item.path">
+      <i v-show="item.meta.icon" :class="item.meta.icon"></i>
+
+      <span slot="title">{{ item.meta.title }}</span>
+    </el-menu-item>
+
+    <el-submenu v-else :index="item.path">
       <template slot="title">
-        <i class="el-icon-location"></i>
-        <span>导航一</span>
+        <i v-show="item.meta.icon" :class="item.meta.icon"></i>
+        <span slot="title">{{ item.meta.title }}</span>
       </template>
-      <el-menu-item-group>
-        <template slot="title">分组一</template>
-        <el-menu-item index="1-1">选项1</el-menu-item>
-        <el-menu-item index="1-2">选项2</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组2">
-        <el-menu-item index="1-3">选项3</el-menu-item>
-      </el-menu-item-group>
-      <el-submenu index="1-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="1-4-1">选项1</el-menu-item>
-      </el-submenu>
+
+      <sider-item v-for="(child, i) in item.children" :item="child" :key="i" />
     </el-submenu>
-    <el-menu-item index="2">
-      <i class="el-icon-menu"></i>
-      <span slot="title">导航二</span>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <i class="el-icon-document"></i>
-      <span slot="title">导航三</span>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <i class="el-icon-setting"></i>
-      <span slot="title">导航四</span>
-    </el-menu-item>
-  </div>
+  </span>
 </template>
 
 <script>
 export default {
-  name: 'sideritem'
+  name: 'SiderItem',
+  props: {
+    item: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  mounted() {},
+  computed: {
+    isShow() {
+      return !this.item?.meta?.hide
+    }
+  }
 }
 </script>
 

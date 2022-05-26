@@ -1,5 +1,5 @@
 <template>
-  <router-view></router-view>
+  <div>请假条</div>
 </template>
 
 <script>

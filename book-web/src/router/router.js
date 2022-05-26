@@ -47,11 +47,13 @@ const asyncRouter = [
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/Home'),
+        meta: { title: '首页', icon: 'el-icon-eleme' },
       },
       ,
       {
         path: 'profile',
         name: 'profile',
+        meta: { title: '个人信息', hide: true },
       },
       {
         path: 'student',
@@ -60,14 +62,18 @@ const asyncRouter = [
 
         meta: {
           role: [IDENT_ENUM[2].value],
+          title: '学生信息',
+          icon: 'el-icon-user-solid',
         },
         children: [
           {
             path: 'classmate', // 同班同学
             meta: { title: '同班同学' },
+            component: () => import('@/views/student/Classmate'),
           },
           {
             path: 'askleave', // 请假条
+            component: () => import('@/views/student/Askleave'),
             meta: { title: '请假条' },
           },
         ],
@@ -75,8 +81,11 @@ const asyncRouter = [
       {
         path: 'teacher',
         name: 'teacher',
+
         meta: {
           role: [IDENT_ENUM[1].value],
+          icon: 'el-icon-remove',
+          title: '老师信息',
         },
         children: [
           {
@@ -95,6 +104,7 @@ const asyncRouter = [
         name: 'manage',
         meta: {
           role: [IDENT_ENUM[0].value],
+          title: '管理员',
         },
       },
     ],

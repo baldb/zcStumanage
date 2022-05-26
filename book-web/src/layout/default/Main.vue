@@ -5,7 +5,7 @@
 
     <el-container>
       <!-- 第二块 -->
-      <el-aside :width="isCollapse ? '60px' : '200px'">
+      <el-aside :width="isCollapse ? '65px' : '200px'">
         <global-side-bar
           :is-collapse="isCollapse"
           @hideMenu="hideMenu"
@@ -46,7 +46,6 @@ export default {
   min-height: 100vh;
   overflow: hidden;
 }
-
 .el-main {
   background-color: #e9eef3;
   color: #333;
