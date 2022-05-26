@@ -1,17 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import * as menuModule from "./menu";
+import * as userModule from "./user";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    state: {
-        userInfo: {},
-        token: "",
+    getters: {
+        indentity: state => state.user.identity,
     },
-    mutations: {
-        increment(state) {
-            // state.count++;
-        },
+    modules: {
+        menu: menuModule,
+        user: userModule,
     },
 });
 
