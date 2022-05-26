@@ -24,6 +24,7 @@ const filterAsyncRouter = (router, indentity) => {
 
 const state = () => ({
   router: constantRouter,
+  accessRouter: [],
 })
 
 const mutations = {
@@ -31,6 +32,8 @@ const mutations = {
   SET_ROUTER(state, router) {
     // 设置路由
     state.router = constantRouter.concat(router)
+    // 设置显示的路由
+    state.accessRouter = router?.[0]?.children ?? []
   },
 }
 

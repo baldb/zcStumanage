@@ -8,9 +8,9 @@ const constantRouter = [
   {
     // 登录
     path: '/passpot',
-    name: 'passpot',
-    component: () => import('@/layout/passport/PassPort'),
     redirect: '/passpot/login',
+
+    component: () => import('@/layout/passport/PassPort'),
     children: [
       {
         path: 'login',
@@ -57,15 +57,18 @@ const asyncRouter = [
         path: 'student',
         name: 'student',
         component: () => import('@/views/student/Student'),
+
         meta: {
           role: [IDENT_ENUM[2].value],
         },
         children: [
           {
             path: 'classmate', // 同班同学
+            meta: { title: '同班同学' },
           },
           {
             path: 'askleave', // 请假条
+            meta: { title: '请假条' },
           },
         ],
       },
@@ -78,10 +81,12 @@ const asyncRouter = [
         children: [
           {
             path: 'studentsList', // 学生列表
+            meta: { title: '学生列表' },
           },
 
           {
             path: 'askleaveinfo', // 请假列表
+            meta: { title: '请假列表' },
           },
         ],
       },

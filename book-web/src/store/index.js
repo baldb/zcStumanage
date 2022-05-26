@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     indentity: (state) => state.user.identity,
     isAdmin: (state) => state.user.identity === 'admin',
     getRouter: (state) => state.menu.router,
+    getAccessRouter: (state) => state.menu.accessRouter,
   },
   modules: {
     menu: menuModule,

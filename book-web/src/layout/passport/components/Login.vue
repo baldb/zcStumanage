@@ -81,14 +81,16 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-           axios.get('/api/user/login',{params: {
-                name: 'linyi',
-                password: '123456'
-            }}).then(()=>{
- this.$router.push('/passed')
-            })
-            
-         
+          // axios
+          //   .get('/api/user/login', {
+          //     params: {
+          //       name: 'linyi',
+          //       password: '123456'
+          //     }
+          //   })
+          //   .then(() => {})
+          // 捕获错误
+          this.$router.push('/passed').catch(() => {})
         } else {
           return false
         }

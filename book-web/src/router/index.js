@@ -37,12 +37,9 @@ router.beforeEach(async (to, form, next) => {
     next()
   } else {
     store.commit('user/setIdentity', 'student')
-
     // 获取权限路由
     const allowRoute = await store.dispatch('menu/getAllowRoute')
-
     router.addRoutes(allowRoute)
-
     // 拦截跳转
     next({ ...to, replace: true })
   }
