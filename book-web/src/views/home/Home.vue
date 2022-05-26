@@ -8,14 +8,14 @@
 <script>
 export default {
   mounted() {
-    console.log(this.$store.state.count);
-    console.log(this.$route);
-    console.log(this.$router);
+    // console.log(this.$store.state.count);
+    // console.log(this.$route);
+    // console.log(this.$router);
   },
   methods: {
-    send() {},
-  },
-};
+    send() {}
+  }
+}
 </script>
 
 <style scoped>

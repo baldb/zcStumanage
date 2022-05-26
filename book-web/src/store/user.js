@@ -1,16 +1,18 @@
-import { IDENT_ENUM } from "../constant/auth";
+import { IDENT_ENUM } from '../constant/auth'
 
-const namespaced = true;
+const namespaced = true
 
 const state = () => ({
-    username: "cxn",
-    identity: IDENT_ENUM[1].value,
-});
+  username: 'cxn',
+  identity: '',
+})
 
-const mutations = {};
+const mutations = {
+  setIdentity(state, payload) {
+    state.identity = payload
+  },
+}
 
-const actions = {};
+const actions = {}
 
-const getters = {};
-
-export { namespaced, state, mutations, actions, getters };
+export { namespaced, state, mutations, actions }
