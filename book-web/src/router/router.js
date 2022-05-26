@@ -105,6 +105,7 @@ const asyncRouter = [
         meta: {
           role: [IDENT_ENUM[0].value],
           title: '管理员',
+          icon: 'el-icon-remove',
         },
       },
     ],

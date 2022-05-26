@@ -1,9 +1,14 @@
 import { asyncRouter, constantRouter } from '../router'
+import { IDENT_ENUM } from '../constant/auth'
 
 const namespaced = true
 
 const hashpermissionRoute = (route, indentity) => {
-  if (!route.meta?.role || route.meta.role?.includes(indentity)) {
+  if (
+    indentity === IDENT_ENUM[0].value ||
+    !route.meta?.role ||
+    route.meta.role?.includes(indentity)
+  ) {
     return true
   }
   return false
@@ -12,7 +17,7 @@ const hashpermissionRoute = (route, indentity) => {
 const filterAsyncRouter = (router, indentity, basePath = '') => {
   const accessedRouters = router.filter((route) => {
     Object.assign(route, { path: basePath + route.path })
-    // route.path =
+
     // 判断权限是否存在
     if (hashpermissionRoute(route, indentity)) {
       if (route.children && route.children.length) {
@@ -49,10 +54,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       // 先赋值所有权限
       let allowRoute = asyncRouter
-      // 判断是不是超级管理员
-      if (!rootGetters.isAdmin) {
-        allowRoute = filterAsyncRouter(allowRoute, rootGetters.indentity)
-      }
+      // 设置权限
+      allowRoute = filterAsyncRouter(allowRoute, rootGetters.indentity)
       // 刷新权限
       commit('SET_ROUTER', allowRoute)
 
