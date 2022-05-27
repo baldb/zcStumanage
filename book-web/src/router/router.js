@@ -74,7 +74,7 @@ const asyncRouter = [
           {
             path: 'askleave', // 请假条
             component: () => import('@/views/student/Askleave'),
-            meta: { title: '请假条' },
+            meta: { title: '请假条', showBadge: true },
           },
         ],
       },
@@ -95,7 +95,7 @@ const asyncRouter = [
 
           {
             path: 'askleaveinfo', // 请假列表
-            meta: { title: '请假列表' },
+            meta: { title: '请假列表', showBadge: true },
           },
         ],
       },

@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <div class="passport-content">
-      <div class="passport-card">
-        <div class="passport-title">
-          <!-- <i nz-icon nzType="cloud" nzTheme="outline"></i> -->
-          <i class="el-icon-cloudy"></i>
-          学生管理系统
-        </div>
-        <router-view></router-view>
+  <div class="passport-content">
+    <div class="passport-card">
+      <div class="passport-title">
+        <!-- <i nz-icon nzType="cloud" nzTheme="outline"></i> -->
+        <i class="el-icon-cloudy"></i>
+        学生管理系统
       </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -30,6 +28,7 @@ export default {
   bottom: 0;
   background-image: url('~assets/passport.png');
   background-repeat: no-repeat;
+  background-color: white;
   /*background-size:100%;*/
 }
 

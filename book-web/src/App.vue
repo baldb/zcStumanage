@@ -32,8 +32,9 @@ export default {
 </script>
 
 <style lang="less">
-body{
+body {
   margin: 0;
   padding: 0;
+  background-color: #e9eef3;
 }
 </style>
