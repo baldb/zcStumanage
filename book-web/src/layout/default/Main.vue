@@ -11,7 +11,7 @@
       /></el-aside>
       <!-- 主体-->
       <el-main
-        ><header-crumbs></header-crumbs>
+        ><header-crumbs tags=""></header-crumbs>
         <div class="layout-view">
           <router-view></router-view></div
       ></el-main>
@@ -33,9 +33,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAccessRouter'])
+    ...mapGetters(['getAccessRouter', 'getTagList', 'getActiveMenu'])
   },
-  methods: {}
+  methods: {},
+  watch: {
+    getActiveMenu(newPath, oldPath) {
+      // 说明是第一次加载
+      if (!oldPath) return
+      this.$router.push({ path: newPath.path })
+    }
+  }
 }
 </script>
 

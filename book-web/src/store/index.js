@@ -11,6 +11,8 @@ const store = new Vuex.Store({
     isAdmin: (state) => state.user.identity === 'admin',
     getRouter: (state) => state.menu.router,
     getAccessRouter: (state) => state.menu.accessRouter,
+    getTagList: (state) => state.menu.tagList,
+    getActiveMenu: (state) => state.menu.activeMenu,
   },
   modules: {
     menu: menuModule,
