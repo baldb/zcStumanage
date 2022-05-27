@@ -1,21 +1,16 @@
 <template>
   <div class="aside-box">
     <el-menu
-      background-color="#545c64"
+      background-color="#4d58b5"
       text-color="#fff"
-      active-text-color="#ffd04b"
-      default-active="2"
+      active-text-color="#0397fe"
+      default-active="/passed/home"
       class="el-menu-vertical-demo"
-      :collapse="isCollapse"
       :collapse-transition="false"
       router
     >
       <sider-item v-for="(item, index) in menu" :key="index" :item="item" />
     </el-menu>
-
-    <div class="menu-fot" @click="hideMenu">
-      <i class="el-icon-s-fold"></i>
-    </div>
   </div>
 </template>
 
@@ -34,11 +29,7 @@ export default {
     console.log(this.menu)
   },
 
-  methods: {
-    hideMenu() {
-      this.$emit('hideMenu', !this.isCollapse)
-    }
-  }
+  methods: {}
 }
 </script>
 
@@ -48,6 +39,8 @@ export default {
   padding-left: 0;
   text-align: left;
   flex: 1;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .menu-fot {
@@ -58,8 +51,7 @@ export default {
 }
 .aside-box {
   height: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+  padding: 10px;
 }
 </style>

@@ -1,15 +1,12 @@
 <template>
   <el-container class="layout_box">
     <!-- 第一块 -->
-    <el-header height="100px">Header</el-header>
+    <el-header height="60px">Header</el-header>
 
     <el-container>
       <!-- 第二块 -->
-      <el-aside :width="isCollapse ? '65px' : '200px'">
-        <global-side-bar
-          :is-collapse="isCollapse"
-          @hideMenu="hideMenu"
-          :menu="getAccessRouter"
+      <el-aside width="200px">
+        <global-side-bar :menu="getAccessRouter"
       /></el-aside>
 
       <!-- 第三块 -->
@@ -32,11 +29,7 @@ export default {
   computed: {
     ...mapGetters(['getAccessRouter'])
   },
-  methods: {
-    hideMenu(e) {
-      this.isCollapse = e
-    }
-  }
+  methods: {}
 }
 </script>
 

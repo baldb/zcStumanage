@@ -36,7 +36,7 @@ router.beforeEach(async (to, form, next) => {
   if (indentity) {
     next()
   } else {
-    store.commit('user/setIdentity', 'teacher')
+    store.commit('user/setIdentity', 'student')
     // 获取权限路由
     const allowRoute = await store.dispatch('menu/getAllowRoute')
     router.addRoutes(allowRoute)

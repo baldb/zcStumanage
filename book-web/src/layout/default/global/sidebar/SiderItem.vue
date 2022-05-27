@@ -1,6 +1,10 @@
 <template>
-  <span v-if="isShow">
-    <el-menu-item v-if="!item.children" :index="item.path">
+  <div v-if="isShow">
+    <el-menu-item
+      v-if="!item.children"
+      :index="item.path"
+      class="is-active-menuitem"
+    >
       <i v-show="item.meta.icon" :class="item.meta.icon"></i>
 
       <span slot="title">{{ item.meta.title }}</span>
@@ -14,7 +18,7 @@
 
       <sider-item v-for="(child, i) in item.children" :item="child" :key="i" />
     </el-submenu>
-  </span>
+  </div>
 </template>
 
 <script>
