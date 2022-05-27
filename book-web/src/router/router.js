@@ -1,4 +1,5 @@
 import { IDENT_ENUM } from '../constant/auth'
+import store from '../store'
 
 const constantRouter = [
   {
@@ -53,6 +54,13 @@ const asyncRouter = [
       {
         path: 'profile',
         name: 'profile',
+        component: () => import('@/views/profile/Profile'),
+        beforeEnter: (to, from, next) => {
+          // 路由守卫拦截
+          store.commit('menu/SET_AVTIVE_MENU', to)
+          next()
+        },
+
         meta: { title: '个人信息', hide: true },
       },
       {

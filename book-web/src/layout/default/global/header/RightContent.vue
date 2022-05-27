@@ -1,6 +1,6 @@
 <template>
   <div class="reight">
-    <el-dropdown>
+    <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
         <span class="avatar-tip">
           <el-avatar
@@ -11,8 +11,8 @@
         蔡夏柠 <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人信息</el-dropdown-item>
-        <el-dropdown-item>退出登录</el-dropdown-item>
+        <el-dropdown-item :command="1">个人信息</el-dropdown-item>
+        <el-dropdown-item :command="2">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -20,7 +20,20 @@
 
 <script>
 export default {
-  name: 'rightContent'
+  name: 'rightContent',
+  methods: {
+    handleCommand(command) {
+      switch (command) {
+        case 1:
+          this.$router.push({ name: 'profile', replace: true })
+          break
+
+        case 2:
+          this.$router.push({ path: '/', replace: true })
+          break
+      }
+    }
+  }
 }
 </script>
 
