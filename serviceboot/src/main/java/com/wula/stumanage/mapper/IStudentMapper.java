@@ -1,8 +1,8 @@
 package com.wula.stumanage.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wula.stumanage.pojo.Student;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
 
 /**
  * @author 林逸
@@ -10,6 +10,5 @@ import tk.mybatis.mapper.common.Mapper;
  * 1.0
  */
 @Repository
-public interface StudentMapper extends Mapper<Student> {
-
+public interface IStudentMapper extends BaseMapper<Student> {
 }

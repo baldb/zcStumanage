@@ -1,8 +1,8 @@
 package com.wula.stumanage.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wula.stumanage.pojo.User;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
 
 /**
  * @author 林逸
@@ -10,5 +10,6 @@ import tk.mybatis.mapper.common.Mapper;
  * 1.0
  */
 @Repository
-public interface UserMapper extends Mapper<User> {
+public interface IUserMapper extends BaseMapper<User> {
+
 }
