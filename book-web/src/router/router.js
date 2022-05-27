@@ -58,8 +58,7 @@ const asyncRouter = [
       {
         path: 'student',
         name: 'student',
-        component: () => import('@/views/student/Student'),
-
+        component: () => import('@/views/InfoMain'), // 定义一个核心容器用来做缓存
         meta: {
           role: [IDENT_ENUM[2].value],
           title: '学生信息',
@@ -68,11 +67,13 @@ const asyncRouter = [
         children: [
           {
             path: 'classmate', // 同班同学
+            name: 'classmate',
             meta: { title: '同班同学' },
             component: () => import('@/views/student/Classmate'),
           },
           {
             path: 'askleave', // 请假条
+            name: 'askleave',
             component: () => import('@/views/student/Askleave'),
             meta: { title: '请假条', showBadge: true },
           },
@@ -81,7 +82,7 @@ const asyncRouter = [
       {
         path: 'teacher',
         name: 'teacher',
-
+        component: () => import('@/views/InfoMain'),
         meta: {
           role: [IDENT_ENUM[1].value],
           icon: 'el-icon-remove',
@@ -90,11 +91,13 @@ const asyncRouter = [
         children: [
           {
             path: 'studentsList', // 学生列表
+            name: 'studentsList',
             meta: { title: '学生列表' },
           },
 
           {
             path: 'askleaveinfo', // 请假列表
+            name: 'askleaveinfo',
             meta: { title: '请假列表', showBadge: true },
           },
         ],
@@ -102,6 +105,7 @@ const asyncRouter = [
       {
         path: 'manage',
         name: 'manage',
+
         meta: {
           role: [IDENT_ENUM[0].value],
           title: '管理员',

@@ -1,21 +1,42 @@
 <template>
   <div class="crumbs-content">
-    <el-tag closable :disable-transitions="false"> 首页 </el-tag>
-    <router-link to="/home" custom v-slot="{ isActive }">
-      <el-tag closable :disable-transitions="false">
-        {{ isActive }}
+    <router-link
+      v-for="item in getTagList"
+      :key="item.path"
+      :to="item.path"
+      custom
+      v-slot="{ isActive }"
+    >
+      <el-tag
+        class="tag-item"
+        :closable="getTagList.length > 1"
+        :disable-transitions="false"
+        @click="herdercrumbsClick(item)"
+        :effect="isActive ? 'dark' : 'plain'"
+        @close="closeTag(item.path)"
+      >
+        {{ item.meta.title }}
       </el-tag>
     </router-link>
-
-    <el-tag closable :disable-transitions="false"> 活动列表 </el-tag>
-
-    <el-tag closable :disable-transitions="false"> 活动详情 </el-tag>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'HeaderCrumbs'
+  name: 'HeaderCrumbs',
+  computed: {
+    ...mapGetters(['getTagList'])
+  },
+  methods: {
+    herdercrumbsClick(item) {
+      // 点击tag切换激活menu
+      this.$store.commit('menu/SET_AVTIVE_MENU', item)
+    },
+    closeTag(path) {
+      this.$store.commit('menu/REMOVE_TAG', path)
+    }
+  }
 }
 </script>
 
@@ -23,6 +44,13 @@ export default {
 .crumbs-content {
   width: 100%;
   height: 40px;
-  background: yellow;
+  background: rgb(240, 240, 123);
+  display: flex;
+  align-items: center;
+}
+
+.crumbs-content .el-tag {
+  margin-left: 5px;
+  cursor: pointer;
 }
 </style>

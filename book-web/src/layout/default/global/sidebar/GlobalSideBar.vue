@@ -16,10 +16,9 @@
         background-color="#4d58b5"
         text-color="#fff"
         active-text-color="#0397fe"
-        default-active="/passed/home"
+        :default-active="getActiveMenu.path"
         class="el-menu-vertical-demo"
         :collapse-transition="false"
-        router
       >
         <sider-item v-for="(item, index) in menu" :key="index" :item="item" />
       </el-menu>
@@ -29,6 +28,7 @@
 
 <script>
 import SiderItem from './SiderItem'
+import { mapGetters } from 'vuex'
 export default {
   name: 'sirdebar',
   props: {
@@ -38,11 +38,14 @@ export default {
   components: {
     SiderItem
   },
-  mounted() {
-    console.log(this.menu)
+  computed: {
+    ...mapGetters(['getActiveMenu'])
   },
-
-  methods: {}
+  mounted() {
+    if (this.$route.path) {
+      this.$store.commit('menu/SET_AVTIVE_MENU', this.$route)
+    }
+  }
 }
 </script>
 

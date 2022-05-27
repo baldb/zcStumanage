@@ -14,6 +14,7 @@ const hashpermissionRoute = (route, indentity) => {
   return false
 }
 
+// 过滤权限
 const filterAsyncRouter = (router, indentity, basePath = '') => {
   const accessedRouters = router.filter((route) => {
     Object.assign(route, { path: basePath + route.path })
@@ -33,18 +34,41 @@ const filterAsyncRouter = (router, indentity, basePath = '') => {
   return accessedRouters
 }
 
+// 设置状态
 const state = () => ({
   router: constantRouter,
   accessRouter: [],
+  activeMenu: '',
+  tagList: [],
 })
 
 const mutations = {
-  //
   SET_ROUTER(state, router) {
     // 设置路由
     state.router = constantRouter.concat(router)
     // 设置显示的路由
     state.accessRouter = router?.[0]?.children ?? []
+  },
+
+  // 顺便添加tag缓存
+  SET_AVTIVE_MENU(state, route) {
+    if (!state.tagList.find((i) => i.path === route.path)) {
+      state.tagList.push(route)
+    }
+    state.activeMenu = route
+  },
+
+  // 移除tag
+  REMOVE_TAG(state, path) {
+    const idx = state.tagList.findIndex((i) => i.path === path)
+
+    if (!~idx) return
+
+    if (state.activeMenu.path === path) {
+      // 如果删除的当前的就往后移动
+      state.activeMenu = state.tagList[idx + 1] ?? state.tagList[0]
+    }
+    state.tagList.splice(idx, 1)
   },
 }
 

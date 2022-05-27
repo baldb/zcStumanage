@@ -3,7 +3,10 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'classmate',
+  mounted() {}
+}
 </script>
 
 <style scoped>
