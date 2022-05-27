@@ -1,10 +1,9 @@
 package com.wula.stumanage.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -13,14 +12,14 @@ import java.util.Date;
  * 1.0
  */
 @Data
-@Table(name = "student")
+@TableName("student")
 public class Student {
-    @Id
+
+    @TableId(value = "stu_no",type = IdType.AUTO)
     private Integer stuNo;
 
     private String stuName;
 
-    @Column(name = "sex")
     private String Sex;
 
     private Integer Phone;

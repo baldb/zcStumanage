@@ -1,10 +1,12 @@
 package com.wula.stumanage.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import java.util.Date;
 
 /**
@@ -13,12 +15,13 @@ import java.util.Date;
  * 1.0
  */
 @Data
-@Table(name = "user")
+@TableName("user")
 public class User {
-    @Id
+
+    @TableId(value = "uid",type = IdType.AUTO)
     private Integer Uid;
     private String Password;
-    @Column(name = "username")
+    @TableField("username")
     private String userName;
     private String identity;
     private Date createTime;
