@@ -13,7 +13,11 @@
       <el-main
         ><header-crumbs tags=""></header-crumbs>
         <div class="layout-view">
-          <router-view></router-view></div
+          <!-- 缓存组件 -->
+          <keep-alive :include="getTagList.map((i) => i.name)">
+            <Transition name="el-zoom-in-bottom" appear mode="out-in"
+              ><router-view></router-view></Transition
+          ></keep-alive></div
       ></el-main>
       <!-- <el-footer height="100px">Footer</el-footer> -->
     </el-container>

@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: 'home',
   mounted() {
     // console.log(this.$store.state.count);
     // console.log(this.$route);
