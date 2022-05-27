@@ -6,11 +6,15 @@
     ></el-header>
     <el-container class="contexnt-box">
       <!--侧边栏 -->
-      <el-aside width="260px">
+      <el-aside width="230px">
         <global-side-bar :menu="getAccessRouter"
       /></el-aside>
       <!-- 主体-->
-      <el-main> <router-view></router-view></el-main>
+      <el-main
+        ><header-crumbs></header-crumbs>
+        <div class="layout-view">
+          <router-view></router-view></div
+      ></el-main>
       <!-- <el-footer height="100px">Footer</el-footer> -->
     </el-container>
   </el-container>
@@ -19,9 +23,10 @@
 <script>
 import GlobalSideBar from './global/sidebar/GlobalSideBar.vue'
 import GlobalHeader from './global/header/GlobalHeader.vue'
+import HeaderCrumbs from './global/header/HeaderCrumbs.vue'
 import { mapGetters } from 'vuex'
 export default {
-  components: { GlobalSideBar, GlobalHeader },
+  components: { GlobalSideBar, GlobalHeader, HeaderCrumbs },
   data() {
     return {
       isCollapse: false
@@ -43,11 +48,11 @@ export default {
 .el-main {
   color: #333;
   text-align: center;
-  padding-top: 40px;
 }
-.el-main div {
+.el-main .layout-view {
   background: white;
-  height: 100%;
+
+  height: calc(100% - 40px);
 }
 .el-header {
   background: url('~assets/8dbc96051e7bc028511bb1a5c48bf7d8.png') no-repeat

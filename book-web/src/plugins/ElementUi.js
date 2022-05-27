@@ -24,6 +24,8 @@ import {
   DropdownMenu,
   Badge,
   Tag,
+  Breadcrumb,
+  BreadcrumbItem,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -36,7 +38,6 @@ Vue.use(Aside)
 Vue.use(Header)
 Vue.use(Main)
 Vue.use(Footer)
-
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Menu)
@@ -50,5 +51,7 @@ Vue.use(DropdownItem)
 Vue.use(DropdownMenu)
 Vue.use(Badge)
 Vue.use(Tag)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
 
 Vue.prototype.$message = Message
