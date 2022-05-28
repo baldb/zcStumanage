@@ -21,12 +21,22 @@ const resetRouter = () => {
   router.matcher = newRouter.matcher // reset router
 }
 
+const setTitle = (title) => {
+  if (title) {
+    document.title = title
+  } else {
+    document.title = '管理系统'
+  }
+}
+
 // 创建路由
 const router = createRouter()
 
 router.beforeEach(async (to, form, next) => {
   // 跳转路由判断
   // 如果是/ 就让他通过
+
+  setTitle(to.meta.title)
 
   if (to.fullPath.startsWith('/passpot')) return next()
   //TODO 获取用户 ---待做

@@ -1,5 +1,4 @@
 import { IDENT_ENUM } from '../constant/auth'
-import store from '../store'
 
 const constantRouter = [
   {
@@ -10,16 +9,17 @@ const constantRouter = [
     // 登录
     path: '/passpot',
     redirect: '/passpot/login',
-
     component: () => import('@/layout/passport/PassPort'),
     children: [
       {
         path: 'login',
         component: () => import('@/layout/passport/components/Login'),
+        meta: { title: '登录' },
       },
       {
         path: 'forgotpwd',
         component: () => import('@/layout/passport/components/Forgotpwd'),
+        meta: { title: '忘记密码' },
       },
     ],
   },

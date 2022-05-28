@@ -4,7 +4,7 @@ import { Notification } from 'element-ui'
 
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 5000,
+  // timeout: 5000,
 })
 
 service.interceptors.request.use(
@@ -14,7 +14,7 @@ service.interceptors.request.use(
     // if (store.getters.token) {
     //   config.headers['X-Token'] = getToken()
     // }
-    // return config
+    return config
   },
   (error) => {
     return Promise.reject(error)
@@ -27,25 +27,22 @@ service.interceptors.response.use(
     console.log('response: ', response)
     const res = response.data
 
-    if (res.code === 401 || res.code === 403) {
-      // location.reload()
-
-      return Promise.reject(new Error(res.message))
-    } else {
-      return res
-    }
+    return res
   },
   (error) => {
+    const errorMessage = error.response.data
+    console.log('errorMessage: ', errorMessage)
     Notification.error({
       title: '请求错误！！！',
-      message: error,
+      message: errorMessage,
     })
-    return Promise.reject(error)
+    return Promise.reject(errorMessage)
   }
 )
 
+// 创建实例
 const axiosInstance = (url, method, data) =>
-  service.create(
+  service(
     Object.assign({ url, method }, method === 'get' ? { params: data } : data)
   )
 

@@ -10,9 +10,9 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item prop="username" label=" " label-width="15px">
+        <el-form-item prop="name" label=" " label-width="15px">
           <el-input
-            v-model.trim="ruleForm.username"
+            v-model.trim="ruleForm.name"
             prefix-icon="el-icon-user"
           ></el-input>
         </el-form-item>
@@ -61,11 +61,11 @@ export default {
       checked: true,
       ruleForm: {
         password: '',
-        username: ''
+        name: ''
       },
       rules: {
         // 验证用户名是否合法
-        username: [
+        name: [
           { required: true, message: '请输入登录名称', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
@@ -81,14 +81,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // axios
-          //   .get('/api/user/login', {
-          //     params: {
-          //       name: 'linyi',
-          //       password: '123456'
-          //     }
-          //   })
-          //   .then(() => {})
+          // this.$store.dispatch('user/login', this.ruleForm)
           // 捕获错误
           this.$router.push('/passed').catch(() => {})
         } else {
