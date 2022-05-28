@@ -17,6 +17,7 @@ const hashpermissionRoute = (route, indentity) => {
 // 过滤权限
 const filterAsyncRouter = (router, indentity, basePath = '') => {
   const accessedRouters = router.filter((route) => {
+    // 设置路径
     Object.assign(route, { path: basePath + route.path })
 
     // 判断权限是否存在
@@ -34,20 +35,56 @@ const filterAsyncRouter = (router, indentity, basePath = '') => {
   return accessedRouters
 }
 
+// 数组扁平化实现多级缓存
+const flatRouter = (router) => {
+  const list = []
+
+  // 扁平数组
+  const flatChild = (chid) => {
+    const chidList = []
+
+    chid.forEach((c) => {
+      const { children, ...res } = c
+      chidList.push(res)
+      if (children && Array.isArray(children)) {
+        chidList.push(...flatChild(children))
+      }
+    })
+
+    return chidList
+  }
+
+  // 第一层不用扁平
+  router.forEach((route, i) => {
+    const { children, ...res } = route
+    if (children && Array.isArray(children)) {
+      list[i] = { ...res, children: [] }
+      list[i].children = flatChild(children)
+    }
+  })
+
+  return list
+}
+
 // 设置状态
 const state = () => ({
   router: constantRouter,
   accessRouter: [],
   activeMenu: '',
   tagList: [],
+  routers: [],
 })
 
 const mutations = {
+  // 设置菜单路由
   SET_ROUTER(state, router) {
-    // 设置路由
-    state.router = constantRouter.concat(router)
     // 设置显示的路由
     state.accessRouter = router?.[0]?.children ?? []
+  },
+  // 设置动态路由
+  SET_ROUTERS(state, routers) {
+    // 设置路由
+    state.router = constantRouter.concat(routers)
   },
 
   // 顺便添加tag缓存
@@ -81,8 +118,10 @@ const actions = {
       let allowRoute = asyncRouter
       // 设置权限
       allowRoute = filterAsyncRouter(allowRoute, rootGetters.indentity)
-      // 刷新权限
       commit('SET_ROUTER', allowRoute)
+      // 扁平化路由
+      const routers = flatRouter(allowRoute)
+      commit('SET_ROUTERS', routers)
 
       resolve(rootGetters.getRouter)
     })

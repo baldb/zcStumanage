@@ -14,10 +14,11 @@
         ><header-crumbs tags=""></header-crumbs>
         <div class="layout-view">
           <!-- 缓存组件 -->
-          <keep-alive :include="getTagList.map((i) => i.name)">
-            <Transition name="el-zoom-in-bottom" appear mode="out-in"
-              ><router-view></router-view></Transition
-          ></keep-alive></div
+          <Transition name="el-zoom-in-bottom" mode="out-in">
+            <keep-alive :include="getTagList.map((i) => i.name)">
+              <router-view></router-view
+            ></keep-alive>
+          </Transition></div
       ></el-main>
       <!-- <el-footer height="100px">Footer</el-footer> -->
     </el-container>
@@ -46,6 +47,10 @@ export default {
         this.$store.commit('menu/SET_AVTIVE_MENU', newRoute)
       },
       immediate: true
+    },
+    getTagList(v) {
+      console.log('v: ', v)
+      console.log(this.getTagList.map((i) => i.name))
     }
   }
 }

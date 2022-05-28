@@ -12,6 +12,9 @@ export default {
     return {
       ttt: ''
     }
+  },
+  destroyed() {
+    console.log(2)
   }
 }
 </script>

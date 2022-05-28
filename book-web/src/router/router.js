@@ -60,7 +60,7 @@ const asyncRouter = [
       {
         path: 'student',
         name: 'student',
-        component: () => import('@/views/InfoMain'), // 定义一个核心容器用来做缓存
+        redirect: '/passed/student/classmate', // 定义一个核心容器用来做缓存
         meta: {
           role: [IDENT_ENUM[2].value],
           title: '学生信息',
@@ -84,7 +84,7 @@ const asyncRouter = [
       {
         path: 'teacher',
         name: 'teacher',
-        component: () => import('@/views/InfoMain'),
+        redirect: '/passed/teacher/studentsList',
         meta: {
           role: [IDENT_ENUM[1].value],
           icon: 'el-icon-remove',
