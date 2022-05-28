@@ -26,7 +26,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderCrumbs',
   computed: {
-    ...mapGetters(['getTagList'])
+    ...mapGetters(['getTagList', 'getActiveMenu'])
   },
   methods: {
     herdercrumbsClick(item) {
@@ -34,6 +34,10 @@ export default {
     },
     closeTag(path) {
       this.$store.commit('menu/REMOVE_TAG', path)
+      if (this.$route.fullPath !== this.getActiveMenu) {
+        // 如果删除了激活的选项就跳转到新路由
+        this.$router.push({ path: this.getActiveMenu })
+      }
     }
   }
 }

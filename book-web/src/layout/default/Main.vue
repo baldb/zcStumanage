@@ -47,10 +47,6 @@ export default {
         this.$store.commit('menu/SET_AVTIVE_MENU', newRoute)
       },
       immediate: true
-    },
-    getTagList(v) {
-      console.log('v: ', v)
-      console.log(this.getTagList.map((i) => i.name))
     }
   }
 }

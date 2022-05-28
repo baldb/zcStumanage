@@ -1,13 +1,18 @@
 <template>
   <div>
     fdsgfdg
-    <el-button @click="send">请求</el-button>
+    <input type="text" v-model="cc" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'home',
+  data() {
+    return {
+      cc: ''
+    }
+  },
   mounted() {
     // console.log(this.$store.state.count);
     // console.log(this.$route);
