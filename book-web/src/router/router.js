@@ -50,17 +50,11 @@ const asyncRouter = [
         component: () => import('@/views/home/Home'),
         meta: { title: '首页', icon: 'el-icon-eleme' },
       },
-      ,
+
       {
         path: 'profile',
         name: 'profile',
         component: () => import('@/views/profile/Profile'),
-        beforeEnter: (to, from, next) => {
-          // 路由守卫拦截
-          store.commit('menu/SET_AVTIVE_MENU', to)
-          next()
-        },
-
         meta: { title: '个人信息', hide: true },
       },
       {
@@ -100,12 +94,14 @@ const asyncRouter = [
           {
             path: 'studentsList', // 学生列表
             name: 'studentsList',
+            component: () => import('@/views/teacher/akleaveinfo'),
             meta: { title: '学生列表' },
           },
 
           {
             path: 'askleaveinfo', // 请假列表
             name: 'askleaveinfo',
+            component: () => import('@/views/teacher/StudentsList'),
             meta: { title: '请假列表', showBadge: true },
           },
         ],

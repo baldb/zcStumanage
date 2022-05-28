@@ -55,7 +55,7 @@ const mutations = {
     if (!state.tagList.find((i) => i.path === route.path)) {
       state.tagList.push(route)
     }
-    state.activeMenu = route
+    state.activeMenu = route.path
   },
 
   // 移除tag
@@ -64,9 +64,10 @@ const mutations = {
 
     if (!~idx) return
 
-    if (state.activeMenu.path === path) {
+    if (state.activeMenu === path) {
       // 如果删除的当前的就往后移动
-      state.activeMenu = state.tagList[idx + 1] ?? state.tagList[0]
+      const currentAv = state.tagList[idx + 1] ?? state.tagList[0]
+      state.activeMenu = currentAv.path
     }
     state.tagList.splice(idx, 1)
   },

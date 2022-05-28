@@ -41,10 +41,11 @@ export default {
   },
   methods: {},
   watch: {
-    getActiveMenu(newPath, oldPath) {
-      // 说明是第一次加载
-      if (!oldPath) return
-      this.$router.push({ path: newPath.path })
+    $route: {
+      handler(newRoute) {
+        this.$store.commit('menu/SET_AVTIVE_MENU', newRoute)
+      },
+      immediate: true
     }
   }
 }

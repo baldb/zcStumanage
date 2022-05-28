@@ -4,7 +4,6 @@
       v-if="!item.children"
       :index="item.path"
       class="is-active-menuitem"
-      @click="selectMenuItem(item)"
     >
       <i v-show="item.meta.icon" :class="item.meta.icon"></i>
 
@@ -42,11 +41,7 @@ export default {
       return !this.item?.meta?.hide
     }
   },
-  methods: {
-    selectMenuItem(e) {
-      this.$store.commit('menu/SET_AVTIVE_MENU', e)
-    }
-  }
+  methods: {}
 }
 </script>
 

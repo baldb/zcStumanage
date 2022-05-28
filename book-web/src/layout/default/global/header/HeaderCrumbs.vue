@@ -11,7 +11,7 @@
         class="tag-item"
         :closable="getTagList.length > 1"
         :disable-transitions="false"
-        @click="herdercrumbsClick(item)"
+        @click="herdercrumbsClick(item.path)"
         :effect="isActive ? 'dark' : 'plain'"
         @close="closeTag(item.path)"
       >
@@ -30,8 +30,7 @@ export default {
   },
   methods: {
     herdercrumbsClick(item) {
-      // 点击tag切换激活menu
-      this.$store.commit('menu/SET_AVTIVE_MENU', item)
+      this.$router.push({ path: item })
     },
     closeTag(path) {
       this.$store.commit('menu/REMOVE_TAG', path)

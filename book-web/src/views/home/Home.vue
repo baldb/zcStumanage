@@ -12,6 +12,7 @@ export default {
     // console.log(this.$store.state.count);
     // console.log(this.$route);
     // console.log(this.$router);
+    console.log(1)
   },
   methods: {
     send() {}

@@ -13,10 +13,11 @@
     </div>
     <div class="menu-container">
       <el-menu
+        router
         background-color="#4d58b5"
         text-color="#fff"
         active-text-color="#0397fe"
-        :default-active="getActiveMenu.path"
+        :default-active="getActiveMenu"
         class="el-menu-vertical-demo"
         :collapse-transition="false"
       >
@@ -41,11 +42,7 @@ export default {
   computed: {
     ...mapGetters(['getActiveMenu'])
   },
-  mounted() {
-    if (this.$route.path) {
-      this.$store.commit('menu/SET_AVTIVE_MENU', this.$route)
-    }
-  }
+  mounted() {}
 }
 </script>
 
