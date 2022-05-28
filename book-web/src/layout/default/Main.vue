@@ -14,7 +14,7 @@
         ><header-crumbs tags=""></header-crumbs>
         <div class="layout-view">
           <!-- 缓存组件 -->
-          <Transition name="el-zoom-in-bottom" mode="out-in">
+          <Transition name="slide-fade" mode="out-in">
             <keep-alive :include="getTagList.map((i) => i.name)">
               <router-view></router-view
             ></keep-alive>
@@ -79,5 +79,17 @@ export default {
 
 .contexnt-box {
   padding: 0 10px 10px;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
