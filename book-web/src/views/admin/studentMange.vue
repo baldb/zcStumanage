@@ -1,5 +1,6 @@
 <template>
   <div>
+    <input type="text" v-model="tt" />
     <my-table :tableData="tableData" :header="header">
       <template #name="{ row }">
         <el-popover trigger="hover" placement="top">
@@ -18,9 +19,11 @@
 import MyTable from '@/components/Table'
 
 export default {
+  name: 'studentmange',
   components: { MyTable },
   data() {
     return {
+      tt: '',
       header: [
         {
           label: '日期',

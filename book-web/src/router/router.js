@@ -110,7 +110,7 @@ const asyncRouter = [
       {
         path: 'manage',
         name: 'manage',
-
+        redirect: '/passed/student/studentmange',
         meta: {
           role: [IDENT_ENUM[0].value],
           title: '管理员',
@@ -119,7 +119,7 @@ const asyncRouter = [
         children: [
           {
             path: 'studentmange',
-            path: 'studentmange',
+            name: 'studentmange',
             component: () => import('@/views/admin/studentMange'),
             meta: { title: '学生管理' },
           },

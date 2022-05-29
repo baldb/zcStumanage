@@ -29,7 +29,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <my-pagination></my-pagination>
+    <my-pagination :total="21"></my-pagination>
   </div>
 </template>
 
