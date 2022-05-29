@@ -1,6 +1,6 @@
 import { asyncRouter, constantRouter } from '../router'
 import { IDENT_ENUM } from '../constant/auth'
-
+import { isArrayEmpty } from '../utils/validate'
 const namespaced = true
 
 const hashpermissionRoute = (route, indentity) => {
@@ -72,7 +72,6 @@ const state = () => ({
   accessRouter: [],
   activeMenu: '',
   tagList: [],
-  routers: [],
 })
 
 const mutations = {
@@ -84,15 +83,21 @@ const mutations = {
   // 设置动态路由
   SET_ROUTERS(state, routers) {
     // 设置路由
-    state.router = constantRouter.concat(routers)
+    state.router = isArrayEmpty(routers)
+      ? constantRouter.concat(routers)
+      : constantRouter
   },
 
   // 顺便添加tag缓存
   SET_AVTIVE_MENU(state, route) {
-    if (!state.tagList.find((i) => i.path === route.path)) {
-      state.tagList.push(route)
+    if (route) {
+      if (!state.tagList.find((i) => i.path === route.path)) {
+        state.tagList.push(route)
+      }
+      state.activeMenu = route?.path
+    } else {
+      state.activeMenu = null
     }
-    state.activeMenu = route.path
   },
 
   // 移除tag
@@ -122,9 +127,10 @@ const actions = {
       commit('SET_ROUTER', allowRoute)
       // 扁平化路由
       const routers = flatRouter(allowRoute)
+
       commit('SET_ROUTERS', routers)
 
-      resolve(rootGetters.getRouter)
+      resolve(routers)
     })
   },
 }

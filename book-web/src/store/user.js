@@ -33,7 +33,8 @@ const actions = {
     removeStorage('userinfo')
     commit('setUserInfo', {})
     commit('menu/SET_ROUTER', null, { root: true })
-    router.push('/')
+    commit('menu/SET_ROUTERS', null, { root: true })
+    commit('menu/SET_AVTIVE_MENU', null, { root: true })
     resetRouter()
   },
 

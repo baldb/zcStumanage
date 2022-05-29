@@ -20,7 +20,7 @@ const createRouter = () =>
 const resetRouter = () => {
   const newRouter = createRouter()
 
-  router.matcher = newRouter.matcher // reset router
+  router.matcher = newRouter.matcher
 }
 
 const setTitle = (title) => {
@@ -42,7 +42,7 @@ router.beforeEach(async (to, form, next) => {
   let identity = store.getters.indentity
 
   if (to.fullPath.startsWith('/passpot')) {
-    if (!!identity) removeStorage('userinfo')
+    if (!!identity) await store.dispatch('user/logout')
     next()
     return
   }
@@ -52,14 +52,15 @@ router.beforeEach(async (to, form, next) => {
 
   // 判断有没有权限
   if (isArrayEmpty(store.getters.getAccessRouter)) {
-    // 获取权限路由
     const allowRoute = await store.dispatch('menu/getAllowRoute')
+
     router.addRoutes(allowRoute)
+
     // 拦截跳转
     return next({ ...to, replace: true })
+  } else {
+    next()
   }
-
-  next()
 })
 
 export { constantRouter, asyncRouter, resetRouter }

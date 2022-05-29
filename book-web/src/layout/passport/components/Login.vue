@@ -39,6 +39,7 @@
         </div>
         <div class="submit-btn">
           <el-button
+            :loading="isLoading"
             type="primary"
             @click="submitForm('ruleForm')"
             style="width: 150px"
@@ -51,11 +52,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'login',
   data() {
     return {
+      isLoading: false,
       ruleForm: {
         password: '',
         name: ''
@@ -78,8 +79,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          this.isLoading = true
           await this.$store.dispatch('user/login', this.ruleForm)
           this.$router.push('/passed').catch(() => {})
+          this.isLoading = false
         } else {
           return false
         }

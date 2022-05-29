@@ -33,7 +33,9 @@ export default {
           break
 
         case 2:
-          this.$store.dispatch('user/logout')
+          this.$store.dispatch('user/logout').then(() => {
+            location.reload()
+          })
           break
       }
     }
