@@ -4,7 +4,7 @@ import { Notification } from 'element-ui'
 
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API,
-  // timeout: 5000,
+  timeout: 5000,
 })
 
 service.interceptors.request.use(

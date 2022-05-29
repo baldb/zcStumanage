@@ -116,6 +116,14 @@ const asyncRouter = [
           title: '管理员',
           icon: 'el-icon-remove',
         },
+        children: [
+          {
+            path: 'studentmange',
+            path: 'studentmange',
+            component: () => import('@/views/admin/studentMange'),
+            meta: { title: '学生管理' },
+          },
+        ],
       },
     ],
   },

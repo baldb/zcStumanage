@@ -26,6 +26,10 @@ import {
   Tag,
   Breadcrumb,
   BreadcrumbItem,
+  Table,
+  TableColumn,
+  Popover,
+  Pagination,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -53,5 +57,9 @@ Vue.use(Badge)
 Vue.use(Tag)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Popover)
+Vue.use(Pagination)
 
 Vue.prototype.$message = Message
