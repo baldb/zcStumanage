@@ -51,7 +51,7 @@ export default {
       // 获取状态
       for (const k in IDENT_ENUM) {
         if (IDENT_ENUM[k].value === this.indentity) {
-          return IDENT_ENUM[k].text
+          return IDENT_ENUM[k].status
         }
       }
       return ''
