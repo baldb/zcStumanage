@@ -26,7 +26,7 @@
           ></el-input>
         </el-form-item>
         <div class="login-check">
-          <router-link
+          <!--     <router-link
             to="forgotpwd"
             tag="span"
             v-slot="{ href, navigate }"
@@ -35,9 +35,7 @@
             <span :href="href" @click="navigate" :style="{ cursor: 'pointer' }"
               >找回密码</span
             >
-          </router-link>
-
-          <el-checkbox v-model="checked">记住密码</el-checkbox>
+          </router-link> -->
         </div>
         <div class="submit-btn">
           <el-button
@@ -58,7 +56,6 @@ export default {
   name: 'login',
   data() {
     return {
-      checked: true,
       ruleForm: {
         password: '',
         name: ''
@@ -79,10 +76,9 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          // this.$store.dispatch('user/login', this.ruleForm)
-          // 捕获错误
+          await this.$store.dispatch('user/login', this.ruleForm)
           this.$router.push('/passed').catch(() => {})
         } else {
           return false

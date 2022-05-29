@@ -8,7 +8,7 @@
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           ></el-avatar
         ></span>
-        蔡夏柠 <i class="el-icon-arrow-down el-icon--right"></i>
+        {{ username }} <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item :command="1">个人信息</el-dropdown-item>
@@ -19,8 +19,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'rightContent',
+  computed: {
+    ...mapGetters(['username'])
+  },
   methods: {
     handleCommand(command) {
       switch (command) {
@@ -29,7 +33,7 @@ export default {
           break
 
         case 2:
-          this.$router.push({ path: '/', replace: true })
+          this.$store.dispatch('user/logout')
           break
       }
     }

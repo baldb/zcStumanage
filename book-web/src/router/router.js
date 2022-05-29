@@ -41,8 +41,9 @@ const asyncRouter = [
     // 登录成功
     path: '/passed',
     name: 'passed',
-    redirect: '/passed/home',
+
     component: () => import('@/layout/default/Main'),
+    redirect: '/passed/home',
     children: [
       {
         path: 'home',

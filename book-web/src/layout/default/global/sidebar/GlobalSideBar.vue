@@ -7,8 +7,10 @@
         :size="100"
       ></el-avatar>
       <div>
-        蔡夏柠
-        <el-tag type="success" hit style="vertical-align: middle">学生</el-tag>
+        {{ username }}
+        <el-tag :type="istype" hit style="vertical-align: middle">{{
+          indentity
+        }}</el-tag>
       </div>
     </div>
     <div class="menu-container">
@@ -30,8 +32,12 @@
 <script>
 import SiderItem from './SiderItem'
 import { mapGetters } from 'vuex'
+import { IDENT_ENUM } from '@/constant/auth'
 export default {
   name: 'sirdebar',
+  data() {
+    return {}
+  },
   props: {
     isCollapse: { tyee: Boolean, default: false },
     menu: { type: Array, default: () => [] }
@@ -40,7 +46,16 @@ export default {
     SiderItem
   },
   computed: {
-    ...mapGetters(['getActiveMenu'])
+    ...mapGetters(['getActiveMenu', 'username', 'indentity']),
+    istype() {
+      // 获取状态
+      for (const k in IDENT_ENUM) {
+        if (IDENT_ENUM[k].value === this.indentity) {
+          return IDENT_ENUM[k].text
+        }
+      }
+      return ''
+    }
   },
   mounted() {}
 }

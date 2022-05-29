@@ -9,7 +9,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    console.log('config: ', config)
+    // console.log('config: ', config)
     // 目前没有token
     // if (store.getters.token) {
     //   config.headers['X-Token'] = getToken()
@@ -24,17 +24,16 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   (response) => {
-    console.log('response: ', response)
     const res = response.data
 
     return res
   },
   (error) => {
-    const errorMessage = error.response.data
-    console.log('errorMessage: ', errorMessage)
+    const { res } = error.response.data
+    console.log('res: ', res)
     Notification.error({
-      title: '请求错误！！！',
-      message: errorMessage,
+      title: res.msg,
+      message: res.status,
     })
     return Promise.reject(errorMessage)
   }

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { constantRouter, asyncRouter } from './router'
 import store from '../store'
+import { isArrayEmpty } from '../utils/validate'
+import { removeStorage } from '../utils/storageUtil'
 
 // 1.安装插件
 Vue.use(VueRouter)
@@ -33,29 +35,33 @@ const setTitle = (title) => {
 const router = createRouter()
 
 router.beforeEach(async (to, form, next) => {
-  // 跳转路由判断
-  // 如果是/ 就让他通过
-
   setTitle(to.meta.title)
+  // 获取用户
+  store.dispatch('user/getUser')
+  // 获取权限
+  let identity = store.getters.indentity
 
-  if (to.fullPath.startsWith('/passpot')) return next()
-  //TODO 获取用户 ---待做
-  const indentity = store.getters.indentity
+  if (to.fullPath.startsWith('/passpot')) {
+    if (!!identity) removeStorage('userinfo')
+    next()
+    return
+  }
 
   // 判断用户身份
-  if (indentity) {
-    next()
-  } else {
-    store.commit('user/setIdentity', 'student')
+  if (!identity) return next('/')
+
+  // 判断有没有权限
+  if (isArrayEmpty(store.getters.getAccessRouter)) {
     // 获取权限路由
     const allowRoute = await store.dispatch('menu/getAllowRoute')
-
     router.addRoutes(allowRoute)
     // 拦截跳转
-    next({ ...to, replace: true })
+    return next({ ...to, replace: true })
   }
+
+  next()
 })
 
-export { constantRouter, asyncRouter }
+export { constantRouter, asyncRouter, resetRouter }
 
 export default router

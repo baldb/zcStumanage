@@ -118,6 +118,7 @@ const actions = {
       let allowRoute = asyncRouter
       // 设置权限
       allowRoute = filterAsyncRouter(allowRoute, rootGetters.indentity)
+
       commit('SET_ROUTER', allowRoute)
       // 扁平化路由
       const routers = flatRouter(allowRoute)
