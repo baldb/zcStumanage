@@ -8,6 +8,15 @@
         @pagination="pageChange"
         :loading="tableLoading"
       >
+        <template #pic="{ row }">
+          <el-avatar
+            size="medium"
+            :src="'http://192.168.137.116:8088/' + row.pic"
+          >
+            <img src="~assets/pic.png"
+          /></el-avatar>
+        </template>
+
         <!-- 姓名插槽 -->
         <template #stuName="{ row }">
           <el-popover trigger="hover" placement="top">
@@ -22,6 +31,7 @@
         <template #Birth="{ row }">
           {{ transTime(row.Birth) }}
         </template>
+
         <template #sex="{ row }">
           <el-tag :type="row.sex === '男' ? 'success' : 'danger'">
             {{ row.sex }}</el-tag
@@ -43,6 +53,12 @@ export default {
   data() {
     return {
       header: [
+        {
+          prop: 'pic',
+          label: '头像',
+          fixed: true,
+          width: 60
+        },
         {
           prop: 'stuNo',
           label: '学号',
@@ -91,6 +107,7 @@ export default {
       try {
         this.tableLoading = true
         const { resultSet } = await getStudent(info)
+        console.log('resultSet: ', resultSet)
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
