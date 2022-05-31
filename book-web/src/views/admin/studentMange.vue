@@ -1,67 +1,119 @@
 <template>
-  <div>
-    <input type="text" v-model="tt" />
-    <my-table :tableData="tableData" :header="header">
-      <template #name="{ row }">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ row.name }}</p>
-          <p>住址: {{ row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium"> {{ row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </my-table>
+  <div class="container">
+    <div class="student-table__box">
+      <my-table
+        :tableData="tableData.records"
+        :header="header"
+        :total="tableData.total"
+        @pagination="pageChange"
+        :loading="tableLoading"
+      >
+        <!-- 姓名插槽 -->
+        <template #stuName="{ row }">
+          <el-popover trigger="hover" placement="top">
+            <p>姓名: {{ row.stuName }}</p>
+            <p>住址: {{ row.address }}</p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag type="warning"> {{ row.stuName }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+
+        <template #Birth="{ row }">
+          {{ transTime(row.Birth) }}
+        </template>
+        <template #sex="{ row }">
+          <el-tag :type="row.sex === '男' ? 'success' : 'danger'">
+            {{ row.sex }}</el-tag
+          >
+        </template>
+      </my-table>
+    </div>
   </div>
 </template>
 
 <script>
 import MyTable from '@/components/Table'
+import { getStudent } from '@/api'
+import moment from 'moment'
 
 export default {
   name: 'studentmange',
   components: { MyTable },
   data() {
     return {
-      tt: '',
       header: [
         {
-          label: '日期',
-          prop: 'date',
-          isTemp: false,
-          width: 180,
-          icon: '',
-          showColumn: true
-        },
-        { label: '姓名', prop: 'name' },
-        { label: '地址', prop: 'address', isTemp: true, showColumn: true }
-      ],
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          prop: 'stuNo',
+          label: '学号',
+          fixed: true
         },
         {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          prop: 'stuName',
+          label: '姓名',
+          width: 70
         },
         {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          prop: 'sex',
+          label: '性别',
+          width: 60
         },
         {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          prop: 'phone',
+          label: '手机号'
+        },
+        {
+          prop: 'email',
+          label: '邮箱'
+        },
+        {
+          prop: 'address',
+          label: '地址'
+        },
+        {
+          prop: 'Birth',
+          label: '年龄'
+        },
+        {
+          prop: 'enroTime',
+          label: '入学时间'
         }
-      ]
+      ],
+      tableData: [],
+      tableLoading: false
+    }
+  },
+  mounted() {
+    this.getStudentList()
+  },
+  methods: {
+    async getStudentList(info = {}) {
+      try {
+        this.tableLoading = true
+        const { resultSet } = await getStudent(info)
+        this.tableData = resultSet
+        this.tableLoading = false
+      } catch (error) {
+        this.tableLoading = false
+      }
+    },
+    transTime(time) {
+      return moment().diff(moment(time), 'year')
+    },
+    pageChange({ page, offset }) {
+      this.getStudentList({ pn: page, offset })
     }
   }
 }
 </script>
 
 <style scoped>
+.container {
+  padding: 20px 0 0;
+  box-sizing: border-box;
+}
+.student-table__box {
+  display: inline-block;
+  max-width: 90%;
+}
 </style>

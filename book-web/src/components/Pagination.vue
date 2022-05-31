@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div :class="{ hidden: hidden }" class="pagination-container">
+    <div
+      :class="{ hidden: hidden }"
+      class="pagination-container"
+      style="text-align: right"
+    >
       <el-pagination
         :background="background"
         :current-page.sync="currentPage"
         :page-size.sync="pageSize"
         layout="prev, pager, next"
-        :page-sizes="pageSizes"
         :total="total"
         v-bind="$attrs"
         @size-change="handleSizeChange"
@@ -29,25 +32,15 @@ export default {
       type: Number,
       default: 1
     },
-    limit: {
+    offset: {
       type: Number,
-      default: 20
-    },
-    pageSizes: {
-      type: Array,
-      default() {
-        return [10, 20, 30, 50]
-      }
+      default: 10
     },
     layout: {
       type: String,
       default: 'prev, pager, next'
     },
     background: {
-      type: Boolean,
-      default: true
-    },
-    autoScroll: {
       type: Boolean,
       default: true
     },
@@ -67,25 +60,19 @@ export default {
     },
     pageSize: {
       get() {
-        return this.limit
+        return this.offset
       },
       set(val) {
-        this.$emit('update:limit', val)
+        this.$emit('update:offset', val)
       }
     }
   },
   methods: {
     handleSizeChange(val) {
-      this.$emit('pagination', { page: this.currentPage, limit: val })
-      if (this.autoScroll) {
-        scrollTo(0, 800)
-      }
+      this.$emit('pagination', { page: this.currentPage, offset: val })
     },
     handleCurrentChange(val) {
-      this.$emit('pagination', { page: val, limit: this.pageSize })
-      if (this.autoScroll) {
-        scrollTo(0, 800)
-      }
+      this.$emit('pagination', { page: val, offset: this.pageSize })
     }
   }
 }
@@ -94,7 +81,7 @@ export default {
 <style scoped>
 .pagination-container {
   background: #fff;
-  padding: 32px 16px;
+  padding: 16px 0;
 }
 .pagination-container.hidden {
   display: none;

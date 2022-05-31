@@ -29,6 +29,12 @@ service.interceptors.response.use(
     return res
   },
   (error) => {
+    if (!error.response.data) {
+      Notification.error({
+        message: error,
+      })
+      return Promise.reject(error)
+    }
     const { res } = error.response.data
     console.log('res: ', res)
     Notification.error({

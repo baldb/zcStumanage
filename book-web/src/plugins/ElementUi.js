@@ -30,6 +30,7 @@ import {
   TableColumn,
   Popover,
   Pagination,
+  Loading,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -61,5 +62,6 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Popover)
 Vue.use(Pagination)
+Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

@@ -79,10 +79,14 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.isLoading = true
-          await this.$store.dispatch('user/login', this.ruleForm)
-          this.$router.push('/passed').catch(() => {})
-          this.isLoading = false
+          try {
+            this.isLoading = true
+            await this.$store.dispatch('user/login', this.ruleForm)
+            this.$router.push('/passed').catch(() => {})
+            this.isLoading = false
+          } catch (error) {
+            this.isLoading = false
+          }
         } else {
           return false
         }
