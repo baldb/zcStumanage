@@ -9,6 +9,8 @@ import com.wula.stumanage.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 林逸
  * cool boy
@@ -38,5 +40,23 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         }else {
             return null;
         }
+    }
+
+    @Override
+    public String judgeNP(String name, String password) {
+        String miPwd= MD5Util.getMD5(password);
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<User> like = lqw.like(name != null, User::getUserName, name);
+        User users = userMapper.selectOne(lqw);
+        if(users==null) {
+            return "用户名不存在";
+        }else {
+            if(users.getPassword().equals(miPwd)){
+                return "登陆成功";
+            }else {
+                return "密码错误";
+            }
+        }
+
     }
 }
