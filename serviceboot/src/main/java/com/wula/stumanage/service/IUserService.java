@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  * cool boy
  * 1.0
  */
-@Service
 public interface IUserService extends IService<User> {
     /**
      * select -----> get 查
@@ -24,4 +23,9 @@ public interface IUserService extends IService<User> {
      * @return
      */
     User login(String name, String password);
+
+    /**
+     * 判断用户名不存在或者密码错误
+     */
+    String judgeNP(String name, String password);
 }

@@ -1,7 +1,7 @@
 package com.wula.stumanage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.wula.stumanage.pojo.Student;
+import com.wula.stumanage.pojo.TCourse;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * 1.0
  */
 @Repository
-public interface IStudentMapper extends BaseMapper<Student>{
+public interface ICourseMapper extends BaseMapper<TCourse> {
 }

@@ -19,8 +19,8 @@ spring:
     #static-locations: [classpath:/images/] 设置静态资源存放的路径
 #id自增策略
 mybatis-plus:
-  global-config:
-    db-config:
-      id-type: auto
+#  global-config:
+#    db-config:
+#      id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出在控制台上   打开mybatis-plus日志
