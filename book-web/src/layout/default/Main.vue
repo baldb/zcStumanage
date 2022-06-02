@@ -57,10 +57,11 @@ export default {
   min-width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .el-main {
   color: #333;
-  text-align: center;
+  box-sizing: border-box;
 }
 .el-main .layout-view {
   background: white;
@@ -75,6 +76,7 @@ export default {
 
 .contexnt-box {
   padding: 0 10px 10px;
+  box-sizing: border-box;
 }
 
 .slide-fade-enter-active {

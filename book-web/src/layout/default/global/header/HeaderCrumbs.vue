@@ -30,7 +30,9 @@ export default {
   },
   methods: {
     herdercrumbsClick(item) {
-      this.$router.push({ path: item })
+      if (this.$route.path !== item) {
+        this.$router.push({ path: item })
+      }
     },
     closeTag(path) {
       this.$store.commit('menu/REMOVE_TAG', path)

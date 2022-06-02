@@ -19,10 +19,7 @@ const mutations = {
 
 const actions = {
   async login({ commit, dispatch }, userinfo) {
-    const {
-      res: { status, resultSet },
-    } = await login(userinfo)
-
+    const { status, resultSet } = await login(userinfo)
     if (status !== 200) return dispatch('logout')
     setStorage('userinfo', resultSet)
     commit('setUserInfo', resultSet)

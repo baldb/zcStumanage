@@ -82,6 +82,7 @@ export default {
           try {
             this.isLoading = true
             await this.$store.dispatch('user/login', this.ruleForm)
+
             this.$router.push('/passed').catch(() => {})
             this.isLoading = false
           } catch (error) {

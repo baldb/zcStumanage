@@ -9,9 +9,7 @@
         :formatter="item.formatter || ((row) => row[item.prop])"
         show-overflow-tooltip
         :fixed="item.fixed || false"
-        element-loading-text="加载中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        align="center"
       >
         <template slot-scope="scope">
           <slot :row="scope.row" :name="item.prop">{{
@@ -19,16 +17,16 @@
           }}</slot>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150" v-if="isEdit" fixed="right">
+      <el-table-column label="操作" v-if="isEdit" fixed="right">
         <template slot-scope="scope">
           <slot name="edit" :edit="scope.row">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+            <el-button size="mini" @click="handleEdit(scope.row)"
               >编辑</el-button
             >
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleDelete(scope.row)"
               >删除</el-button
             >
           </slot>
@@ -61,11 +59,11 @@ export default {
     return {}
   },
   methods: {
-    handleEdit(index, row) {
-      this.$emit('$handleEdit', row)
+    handleEdit(row) {
+      this.$emit('handleEdit', row)
     },
-    handleDelete(index, row) {
-      this.$emit('$handleDelete', row)
+    handleDelete(row) {
+      this.$emit('handleDelete', row)
     }
   }
 }

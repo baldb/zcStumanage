@@ -7,12 +7,11 @@
         :total="tableData.total"
         @pagination="pageChange"
         :loading="tableLoading"
+        :offset="9"
+        @handleEdit="handleEdit"
       >
         <template #pic="{ row }">
-          <el-avatar
-            size="medium"
-            :src="'http://192.168.137.116:8088/' + row.pic"
-          >
+          <el-avatar size="medium" :src="setImagUrl(row.pic)">
             <img src="~assets/pic.png"
           /></el-avatar>
         </template>
@@ -34,22 +33,24 @@
 
         <template #sex="{ row }">
           <el-tag :type="row.sex === '男' ? 'success' : 'danger'">
-            {{ row.sex }}</el-tag
+            {{ row.sex || '未知' }}</el-tag
           >
         </template>
       </my-table>
     </div>
+    <edit-and-creaye-student :visible.sync="visiableForm" />
   </div>
 </template>
 
 <script>
 import MyTable from '@/components/Table'
+import editAndCreayeStudent from './editAndCreayeStudent.vue'
 import { getStudent } from '@/api'
 import moment from 'moment'
 
 export default {
   name: 'studentmange',
-  components: { MyTable },
+  components: { MyTable, editAndCreayeStudent },
   data() {
     return {
       header: [
@@ -67,12 +68,12 @@ export default {
         {
           prop: 'stuName',
           label: '姓名',
-          width: 70
+          width: 80
         },
         {
           prop: 'sex',
           label: '性别',
-          width: 60
+          width: 80
         },
         {
           prop: 'phone',
@@ -88,15 +89,17 @@ export default {
         },
         {
           prop: 'Birth',
-          label: '年龄'
+          label: '年龄',
+          width: 50
         },
         {
           prop: 'enroTime',
           label: '入学时间'
         }
       ],
-      tableData: [],
-      tableLoading: false
+      tableData: {},
+      tableLoading: false,
+      visiableForm: false
     }
   },
   mounted() {
@@ -107,7 +110,7 @@ export default {
       try {
         this.tableLoading = true
         const { resultSet } = await getStudent(info)
-        console.log('resultSet: ', resultSet)
+
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
@@ -119,6 +122,13 @@ export default {
     },
     pageChange({ page, offset }) {
       this.getStudentList({ pn: page, offset })
+    },
+    setImagUrl(url) {
+      return process.env.VUE_APP_BASURL + '/' + url
+    },
+    handleEdit(row) {
+      console.log(row)
+      this.visiableForm = true
     }
   }
 }
@@ -130,7 +140,7 @@ export default {
   box-sizing: border-box;
 }
 .student-table__box {
-  display: inline-block;
+  margin: 0 auto;
   max-width: 90%;
 }
 </style>

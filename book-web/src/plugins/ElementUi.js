@@ -31,6 +31,11 @@ import {
   Popover,
   Pagination,
   Loading,
+  Dialog,
+  Radio,
+  RadioGroup,
+  DatePicker,
+  Upload,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -62,6 +67,11 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Popover)
 Vue.use(Pagination)
+Vue.use(Dialog)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(DatePicker)
+Vue.use(Upload)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

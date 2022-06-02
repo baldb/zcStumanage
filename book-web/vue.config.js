@@ -9,7 +9,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.137.116:8088',
+        target: process.env.VUE_APP_BASURL,
         // ws: false,
         changeOrigin: true,
         pathRewrite: {
