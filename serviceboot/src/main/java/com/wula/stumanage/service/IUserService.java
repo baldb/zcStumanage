@@ -28,4 +28,9 @@ public interface IUserService extends IService<User> {
      * 判断用户名不存在或者密码错误
      */
     String judgeNP(String name, String password);
+
+    /**
+     * 根据用户名查询用户
+     */
+    User getUserByName(String username);
 }

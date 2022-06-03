@@ -1,22 +1,17 @@
 package com.wula.stumanage.controller;
 
 import com.wula.stumanage.pojo.Student;
-import com.wula.stumanage.pojo.User;
-import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
 import com.wula.stumanage.pojo.utils.ResCode;
-import com.wula.stumanage.service.IStudentAndSourceService;
 import com.wula.stumanage.service.IStudentService;
 import com.wula.stumanage.service.IUserService;
 import com.wula.stumanage.service.utilservice.IResCodeService;
-import com.wula.stumanage.utils.UploadPhotoUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * @author 林逸
@@ -33,9 +28,9 @@ import java.util.Map;
  */
 @SuppressWarnings({"all"})
 @RestController
-@RequestMapping("/stus")
+@RequestMapping("/supers")
 @Slf4j
-public class StudentController {
+public class SuperUserController {
 
     @Autowired
     private IStudentService studentService;
@@ -53,36 +48,39 @@ public class StudentController {
      * @param response
      * @return
      */
-    @GetMapping("/stu")
+    @GetMapping("/super")
     public ResCode getStu(@RequestParam(value = "pn",defaultValue = "0") int pn ,
-                      @RequestParam(value = "offset",defaultValue = "0") int offset ,
-                      HttpServletResponse response){
-        return resCodeService.getPageOnCode(pn,offset, response);
+                          @RequestParam(value = "offset",defaultValue = "0") int offset ,
+                          HttpServletResponse response){
+            return resCodeService.getPageOnCode(pn,offset, response);
+
     }
-
-//    /**
-//     * 返回学生全部信息
-//     */
-//    @GetMapping("/getstu")
-//    public Map getStu02(HttpServletResponse response) {
-//        return resCodeService.getAllStudent(response);
-//    }
-
     /**
      * 上传图片。返回图片名
      */
     @PostMapping("/upload")
     public ResCode upPic(@RequestPart("headerImg") MultipartFile headerImg,
                          HttpServletResponse response){
-        log.info("headerImg={}",headerImg.getSize(),headerImg.getName());
-        return resCodeService.uploadPic(headerImg,response);
+            log.info("headerImg={}",headerImg.getSize(),headerImg.getName());
+
+            return resCodeService.uploadPic(headerImg,response);
     }
     /**
      * 添加学生信息
      * 同时添加把学生添加到User表中
      */
-    @PostMapping("/stu")
-    public ResCode addStu(Student student,
+//    前端使用 x-www-form-urlencoded 传数据
+//    @PostMapping("/super")
+//    @ResponseBody
+//    public ResCode addStu(Student student,
+//                          HttpServletResponse response){
+//        System.out.println(student);
+//            return resCodeService.addStuAndUser(student,response);
+//    }
+//    前端使用json传数据
+    @PostMapping("/super")
+    @ResponseBody
+    public ResCode addStutes(@RequestBody Student student,
                           HttpServletResponse response){
         return resCodeService.addStuAndUser(student,response);
     }
@@ -90,8 +88,23 @@ public class StudentController {
     /**
      * 删除学生信息
      */
-
+    @DeleteMapping("/super")
+    public ResCode delete(@RequestParam("stuNo") Integer stuNo){
+        boolean b = studentService.removeById(stuNo);
+        ResCode resCode = new ResCode();
+        resCode.CodeAll(b,null);
+        return resCode;
+    }
     /**
      * 修改学生信息
      */
+    @PutMapping("/super")
+    @ResponseBody
+    public ResCode putStu(@RequestBody Student student){
+        boolean b = studentService.updateById(student);
+        ResCode<Student> studentResCode = new ResCode<>();
+        Student byId = studentService.getById(student.getStuNo());
+        studentResCode.CodeAll(b,byId);
+        return studentResCode;
+    }
 }
