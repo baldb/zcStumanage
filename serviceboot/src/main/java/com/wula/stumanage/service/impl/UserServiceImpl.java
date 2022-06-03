@@ -59,4 +59,12 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         }
 
     }
+
+    @Override
+    public User getUserByName(String username) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<User> like = lqw.eq(username != null, User::getUserName, username);
+        User users = userMapper.selectOne(lqw);
+        return users;
+    }
 }

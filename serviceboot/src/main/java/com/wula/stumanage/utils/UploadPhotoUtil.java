@@ -28,6 +28,7 @@ public class UploadPhotoUtil {
                 headerImg.transferTo(new File(pictureUtil.getFilePath())); //实现文件上传功能，原理
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
 
         }

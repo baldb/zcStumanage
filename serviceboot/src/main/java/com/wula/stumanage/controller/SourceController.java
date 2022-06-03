@@ -1,10 +1,10 @@
 package com.wula.stumanage.controller;
 
 import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
+import com.wula.stumanage.pojo.utils.ResCode;
 import com.wula.stumanage.service.IStudentAndSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +15,24 @@ import java.util.Map;
  * 1.0
  */
 
+/**
+ * /student
+ *  *  * GET-获取用户
+ *  *  * DELETE-删除用户
+ *  *  * PUT-修改用户
+ *  *  * POST-保存/添加用户
+ */
 @RestController
+@RequestMapping("/sources")
 public class SourceController {
 
     @Autowired
-    private IStudentAndSourceService studentService;
-    @RequestMapping("/byno")
-    public Map test(Integer no){
-        Map map = new HashMap();
-        StudentAndSource stuAndSouByNo = studentService.getStuAndSouByNo(no);
-        map.put("stu",stuAndSouByNo);
-        return map;
+    private IStudentAndSourceService studentAndSourceService;
+    @GetMapping("/source")
+    public ResCode test(@RequestParam("no") Integer no){
+        StudentAndSource stuAndSouByNo = studentAndSourceService.getStuAndSouByNo(no);
+        ResCode<StudentAndSource> studentAndSourceResCode = new ResCode<>();
+        studentAndSourceResCode.CodeAll(stuAndSouByNo!=null,stuAndSouByNo);
+        return studentAndSourceResCode;
     }
 }

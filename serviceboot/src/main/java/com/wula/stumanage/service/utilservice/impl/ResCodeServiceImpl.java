@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -120,10 +121,9 @@ public class ResCodeServiceImpl implements IResCodeService {
 
     @Override
     public ResCode uploadPic(MultipartFile headerImg,HttpServletResponse response) {
-
+        ResCode<Object> resCode = new ResCode<>();
         UploadPhotoUtil uploadPhotoUtil = new UploadPhotoUtil();
         uploadPhotoUtil.uploadPhoto(headerImg);
-        ResCode<Object> resCode = new ResCode<>();
         if(headerImg.getSize()>0){
             resCode.setStatus(response.getStatus());
             resCode.setMsg("添加图片成功");
@@ -135,6 +135,7 @@ public class ResCodeServiceImpl implements IResCodeService {
             resCode.setResultSet(null);
         }
         return resCode;
+
     }
 
     @Override

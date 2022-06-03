@@ -17,6 +17,11 @@ spring:
   resources:
     static-locations: [classpath:/images/]
     #static-locations: [classpath:/images/] 设置静态资源存放的路径
+  servlet:
+    multipart:
+#     设置图片最大值
+      max-file-size: 10MB
+      max-request-size: 100MB
 #id自增策略
 mybatis-plus:
 #  global-config:
@@ -24,3 +29,4 @@ mybatis-plus:
 #      id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出在控制台上   打开mybatis-plus日志
+

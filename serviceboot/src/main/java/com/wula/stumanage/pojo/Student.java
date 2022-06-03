@@ -1,8 +1,6 @@
 package com.wula.stumanage.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,16 +24,21 @@ public class Student {
 
     private String Phone;
 
+    @TableField(updateStrategy = FieldStrategy.IGNORED) //设置可以为空
     private String Email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     private Date Birth;
 
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String Address;
 
+
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String Pic;
 
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Integer classId;
 
     /**
