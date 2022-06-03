@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <el-button
-      @click="
-        visiableForm = true
-        isEdit = false
-        row = null
-      "
-      >添加学生</el-button
-    >
     <div class="student-table__box">
+      <el-button
+        type="primary"
+        @click="
+          visiableForm = true
+          isEdit = false
+          row = null
+        "
+        class="add-btn"
+        >添加学生</el-button
+      >
       <my-table
         :tableData="tableData.records"
         :header="header"
@@ -18,6 +20,7 @@
         :offset="offset"
         :page="page"
         @handleEdit="handleEdit"
+        @handleDelete="handleDelete"
       >
         <template #pic="{ row }">
           <el-avatar size="medium" :src="setImagUrl(row.pic)">
@@ -59,7 +62,7 @@
 <script>
 import MyTable from '@/components/Table'
 import editAndCreayeStudent from './editAndCreayeStudent.vue'
-import { getStudent } from '@/api'
+import { getStudent, deleteStudent } from '@/api'
 import moment from 'moment'
 
 export default {
@@ -127,6 +130,7 @@ export default {
       try {
         this.tableLoading = true
         const { resultSet } = await getStudent(info)
+        console.log('resultSet: ', resultSet)
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
@@ -151,8 +155,22 @@ export default {
     // 添加或编辑成功的回调
     addStuSuccess() {
       this.page = 1
-
       this.getStudentList()
+    },
+    async handleDelete(row) {
+      console.log(row)
+      if (!row.stuNo) return
+      try {
+        await deleteStudent({ stuNo: row.stuNo })
+        this.$message.success('删除成功!!')
+        const lat = this.tableData.records.length === 1 && this.page !== 1
+
+        // 如果是最后一条数据页码返回上一页
+        lat && (this.page = this.page - 1)
+        await this.getStudentList({ pn: this.page })
+      } catch (error) {
+        this.$message.error('删除失败！！')
+      }
     }
   }
 }
@@ -166,5 +184,8 @@ export default {
 .student-table__box {
   margin: 0 auto;
   max-width: 90%;
+}
+.add-btn {
+  margin-bottom: 10px;
 }
 </style>

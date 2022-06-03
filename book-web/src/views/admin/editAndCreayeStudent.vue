@@ -7,7 +7,11 @@
     >
       <el-form :model="form" label-width="100px" :rules="rules" ref="ruleForm">
         <el-form-item label="学号" prop="stuNo">
-          <el-input v-model.number="form.stuNo" autocomplete="off"></el-input>
+          <el-input
+            v-model.number="form.stuNo"
+            autocomplete="off"
+            :disabled="this.isEdit"
+          ></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="stuName">
           <el-input v-model="form.stuName" autocomplete="off"></el-input>

@@ -50,7 +50,7 @@ const axiosInstance = (url, method, data) =>
   service(
     Object.assign(
       { url, method },
-      method === 'get' ? { params: data } : { data }
+      method === 'get' || method === 'delete' ? { params: data } : { data }
     )
   )
 

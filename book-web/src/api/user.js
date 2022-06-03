@@ -16,3 +16,7 @@ export const addStudent = async (playload = {}) => {
 export const editStudent = async (playload = {}) => {
   return await axiosInstance('/api/supers/super', 'put', playload)
 }
+//
+export const deleteStudent = async (playload = {}) => {
+  return await axiosInstance('/api/supers/super', 'delete', playload)
+}

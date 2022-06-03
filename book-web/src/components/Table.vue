@@ -23,12 +23,18 @@
             <el-button size="mini" @click="handleEdit(scope.row)"
               >编辑</el-button
             >
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.row)"
-              >删除</el-button
+            <el-popconfirm
+              confirm-button-text="好的"
+              cancel-button-text="不用了"
+              icon="el-icon-info"
+              icon-color="red"
+              title="确实删除？"
+              @confirm="handleDelete(scope.row)"
             >
+              <el-button slot="reference" size="mini" type="danger"
+                >删除</el-button
+              >
+            </el-popconfirm>
           </slot>
         </template>
       </el-table-column>
