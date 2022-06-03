@@ -12,3 +12,7 @@ export const getStudent = async ({ pn = 1, offset = 9 } = {}) =>
 export const addStudent = async (playload = {}) => {
   return await axiosInstance('/api/supers/super', 'post', playload)
 }
+// 修改学生接口
+export const editStudent = async (playload = {}) => {
+  return await axiosInstance('/api/supers/super', 'put', playload)
+}

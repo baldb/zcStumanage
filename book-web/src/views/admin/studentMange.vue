@@ -1,5 +1,13 @@
 <template>
   <div class="container">
+    <el-button
+      @click="
+        visiableForm = true
+        isEdit = false
+        row = null
+      "
+      >添加学生</el-button
+    >
     <div class="student-table__box">
       <my-table
         :tableData="tableData.records"
@@ -42,6 +50,8 @@
     <edit-and-creaye-student
       :visible.sync="visiableForm"
       @success="addStuSuccess"
+      :is-edit="isEdit"
+      :row="row"
     />
   </div>
 </template>
@@ -71,8 +81,7 @@ export default {
         },
         {
           prop: 'stuName',
-          label: '姓名',
-          width: 80
+          label: '姓名'
         },
         {
           prop: 'sex',
@@ -105,7 +114,9 @@ export default {
       tableLoading: false,
       visiableForm: false,
       offset: 9,
-      page: 1
+      page: 1,
+      isEdit: false,
+      row: {} // 保存选中行
     }
   },
   mounted() {
@@ -116,7 +127,6 @@ export default {
       try {
         this.tableLoading = true
         const { resultSet } = await getStudent(info)
-
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
@@ -131,14 +141,17 @@ export default {
       this.getStudentList({ pn: page, offset })
     },
     setImagUrl(url) {
-      return process.env.VUE_APP_BASURL + '/' + url
+      return process.env.VUE_APP_BASURL + '/images/' + url
     },
     handleEdit(row) {
-      console.log(row)
+      this.row = row
       this.visiableForm = true
+      this.isEdit = true
     },
+    // 添加或编辑成功的回调
     addStuSuccess() {
       this.page = 1
+
       this.getStudentList()
     }
   }

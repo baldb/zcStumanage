@@ -9,6 +9,7 @@
       ref="upload"
       :disabled="disable"
       :on-remove="handleRemove"
+      :file-list="fileList"
     >
       <i slot="default" class="el-icon-plus"></i>
     </el-upload>
@@ -24,7 +25,8 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      disable: false
+      disable: false,
+      fileList: []
     }
   },
   props: {
@@ -39,14 +41,15 @@ export default {
     picUrl: {
       type: String,
       default: ''
+    },
+    baseurl: {
+      type: String,
+      require: true
     }
   },
   methods: {
     handleRemove(file) {
-      // const idx = this.fileList.findIndex((f) => f.uid === file.uid)
-      // if (idx === -1) return
-      // this.fileList.splice(idx, 1)
-
+      this.fileList = []
       this.$emit('remove')
     },
     handlePictureCardPreview(file) {
@@ -54,11 +57,26 @@ export default {
       this.dialogVisible = true
     },
     uploadSuccess(response, file) {
-      // this.fileList.push(file)
       this.$emit('success', file)
+    },
+    setPic() {
+      if (!this.picUrl) return
+
+      this.fileList.push({ url: this.baseurl + this.picUrl })
     }
   },
-  watch: {}
+  mounted() {
+    this.setPic()
+  },
+
+  watch: {
+    picUrl: {
+      handler(newUrl, oldUrl) {
+        if (!newUrl) return
+        this.setPic()
+      }
+    }
+  }
 }
 </script>
 
