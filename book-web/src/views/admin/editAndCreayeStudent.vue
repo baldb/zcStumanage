@@ -18,6 +18,14 @@
             <el-radio label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="出生日期" prop="Birth">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.Birth"
+            style="width: 100%"
+          ></el-date-picker>
+        </el-form-item>
         <el-form-item label="手机号" prop="Phone">
           <el-input v-model="form.Phone" autocomplete="off"></el-input>
         </el-form-item>
@@ -27,7 +35,14 @@
         <el-form-item label="地址" prop="Address">
           <el-input v-model="form.Address" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="出生日期" prop="entoTime">
+        <el-form-item label="头像" prop="Pic">
+          <upload
+            @success="uploadSuccess"
+            @remove="uploadRemove"
+            :picUrl="form.Pic"
+          ></upload>
+        </el-form-item>
+        <el-form-item label="入学日期" prop="entoTime">
           <el-date-picker
             type="date"
             placeholder="选择日期"
@@ -46,6 +61,9 @@
 </template>
 
 <script>
+import Upload from '@/components/Upload'
+import { addStudent } from '@/api'
+
 export default {
   name: 'editAndCreayeStudent',
   data() {
@@ -59,6 +77,7 @@ export default {
         Email: '',
         Address: '',
         // classId: '',
+        Birth: '',
         Pic: '',
         entoTime: ''
       },
@@ -66,16 +85,18 @@ export default {
       rules: {
         stuNo: [{ required: true, message: '请输入学号', trigger: 'blur' }],
         stuName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        Sex: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+        Sex: [{ required: true, message: '请选择性别', trigger: 'click' }],
         Phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
         Email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
         Address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
         entoTime: [
-          { required: true, message: '请输入出生日期', trigger: 'blur' }
-        ]
+          { required: true, message: '请输入学日期', trigger: 'blur' }
+        ],
+        Birth: [{ required: true, message: '请选择出生日期', trigger: 'blur' }]
       }
     }
   },
+  components: { Upload },
   props: {
     visible: { type: Boolean, default: false },
     closeDestory: { type: Boolean, default: true }
@@ -97,12 +118,31 @@ export default {
   methods: {
     submitForm() {
       console.log(1)
-      this.$refs['ruleForm'].validate((valid) => {
+      this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
-          console.log(valid)
-          //  this.dialogFormVisible = false
+          try {
+            const data = await addStudent(this.form)
+            this.$message.error('添加成功!!')
+            console.log('data: ', data)
+          } catch (error) {
+            this.$message.error('添加失败')
+            this.dialogFormVisible = false
+          }
         }
       })
+    },
+    uploadSuccess(res) {
+      console.log(res)
+      const { response } = res
+      this.form.Pic = this.setImagUrl(response.resultSet)
+      console.log(' this.form.Pic: ', this.form.Pic)
+    },
+    uploadRemove() {
+      console.log('ds')
+      this.form.Pic = ''
+    },
+    setImagUrl(url) {
+      return process.env.VUE_APP_BASURL + '/' + url
     }
   }
 }

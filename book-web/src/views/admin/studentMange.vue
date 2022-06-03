@@ -7,7 +7,8 @@
         :total="tableData.total"
         @pagination="pageChange"
         :loading="tableLoading"
-        :offset="9"
+        :offset="offset"
+        :page="page"
         @handleEdit="handleEdit"
       >
         <template #pic="{ row }">
@@ -38,7 +39,10 @@
         </template>
       </my-table>
     </div>
-    <edit-and-creaye-student :visible.sync="visiableForm" />
+    <edit-and-creaye-student
+      :visible.sync="visiableForm"
+      @success="addStuSuccess"
+    />
   </div>
 </template>
 
@@ -99,7 +103,9 @@ export default {
       ],
       tableData: {},
       tableLoading: false,
-      visiableForm: false
+      visiableForm: false,
+      offset: 9,
+      page: 1
     }
   },
   mounted() {
@@ -121,6 +127,7 @@ export default {
       return moment().diff(moment(time), 'year')
     },
     pageChange({ page, offset }) {
+      this.page = page
       this.getStudentList({ pn: page, offset })
     },
     setImagUrl(url) {
@@ -129,6 +136,10 @@ export default {
     handleEdit(row) {
       console.log(row)
       this.visiableForm = true
+    },
+    addStuSuccess() {
+      this.page = 1
+      this.getStudentList()
     }
   }
 }

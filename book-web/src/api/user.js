@@ -9,5 +9,6 @@ export const getStudent = async ({ pn = 1, offset = 9 } = {}) =>
   await axiosInstance('/api/supers/super', 'get', { pn, offset })
 
 // 添加学生接口
-export const addStudent = async (playload = {}) =>
-  await axiosInstance('/api/supers/super', 'post', playload)
+export const addStudent = async (playload = {}) => {
+  return await axiosInstance('/api/supers/super', 'post', playload)
+}

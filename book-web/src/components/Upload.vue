@@ -1,32 +1,16 @@
 <template>
-  <div>
-    <el-upload action="#" list-type="picture-card" :auto-upload="false">
+  <div style="display: inline-block">
+    <el-upload
+      :action="action"
+      list-type="picture-card"
+      :name="name"
+      :on-success="uploadSuccess"
+      :limit="1"
+      ref="upload"
+      :disabled="disable"
+      :on-remove="handleRemove"
+    >
       <i slot="default" class="el-icon-plus"></i>
-      <div slot="file" slot-scope="{ file }">
-        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-        <span class="el-upload-list__item-actions">
-          <span
-            class="el-upload-list__item-preview"
-            @click="handlePictureCardPreview(file)"
-          >
-            <i class="el-icon-zoom-in"></i>
-          </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleDownload(file)"
-          >
-            <i class="el-icon-download"></i>
-          </span>
-          <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleRemove(file)"
-          >
-            <i class="el-icon-delete"></i>
-          </span>
-        </span>
-      </div>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="" />
@@ -40,21 +24,41 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      disabled: false
+      disable: false
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      default: 'headerImg'
+    },
+    action: {
+      type: String,
+      default: '/api/supers/upload'
+    },
+    picUrl: {
+      type: String,
+      default: ''
     }
   },
   methods: {
     handleRemove(file) {
-      console.log(file)
+      // const idx = this.fileList.findIndex((f) => f.uid === file.uid)
+      // if (idx === -1) return
+      // this.fileList.splice(idx, 1)
+
+      this.$emit('remove')
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
-    handleDownload(file) {
-      console.log(file)
+    uploadSuccess(response, file) {
+      // this.fileList.push(file)
+      this.$emit('success', file)
     }
-  }
+  },
+  watch: {}
 }
 </script>
 

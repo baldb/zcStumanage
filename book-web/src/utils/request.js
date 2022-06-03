@@ -48,7 +48,10 @@ service.interceptors.response.use(
 // 创建实例
 const axiosInstance = (url, method, data) =>
   service(
-    Object.assign({ url, method }, method === 'get' ? { params: data } : data)
+    Object.assign(
+      { url, method },
+      method === 'get' ? { params: data } : { data }
+    )
   )
 
 export default axiosInstance
