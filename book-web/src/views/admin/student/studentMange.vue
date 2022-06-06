@@ -15,15 +15,15 @@
         :tableData="tableData.records"
         :header="header"
         :total="tableData.total"
-        @pagination="pageChange"
         :loading="tableLoading"
         :offset="offset"
         :page="page"
+        @pagination="pageChange"
         @handleEdit="handleEdit"
         @handleDelete="handleDelete"
       >
         <template #pic="{ row }">
-          <el-avatar size="medium" :src="setImagUrl(row.pic)">
+          <el-avatar size="medium" :src="row.pic | hostPath">
             <img src="~assets/pic.png"
           /></el-avatar>
         </template>
@@ -40,7 +40,7 @@
         </template>
 
         <template #Birth="{ row }">
-          {{ transTime(row.Birth) }}
+          {{ row.Birth | transTimeAge }}
         </template>
 
         <template #sex="{ row }">
@@ -63,7 +63,6 @@
 import MyTable from '@/components/Table'
 import editAndCreayeStudent from './editAndCreayeStudent.vue'
 import { getStudent, deleteStudent } from '@/api'
-import moment from 'moment'
 
 export default {
   name: 'studentmange',
@@ -116,7 +115,7 @@ export default {
       tableData: {},
       tableLoading: false,
       visiableForm: false,
-      offset: 9,
+      offset: 8,
       page: 1,
       isEdit: false,
       row: {} // 保存选中行
@@ -137,15 +136,10 @@ export default {
         this.tableLoading = false
       }
     },
-    transTime(time) {
-      return moment().diff(moment(time), 'year')
-    },
+
     pageChange({ page, offset }) {
       this.page = page
       this.getStudentList({ pn: page, offset })
-    },
-    setImagUrl(url) {
-      return process.env.VUE_APP_BASURL + '/images/' + url
     },
     handleEdit(row) {
       this.row = row
@@ -157,14 +151,15 @@ export default {
       this.page = 1
       this.getStudentList()
     },
+    // 删除学生
     async handleDelete(row) {
       console.log(row)
       if (!row.stuNo) return
       try {
         await deleteStudent({ stuNo: row.stuNo })
         this.$message.success('删除成功!!')
+        // 获取页码
         const lat = this.tableData.records.length === 1 && this.page !== 1
-
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
         await this.getStudentList({ pn: this.page })
@@ -184,6 +179,7 @@ export default {
 .student-table__box {
   margin: 0 auto;
   max-width: 90%;
+  overflow: hidden;
 }
 .add-btn {
   margin-bottom: 10px;

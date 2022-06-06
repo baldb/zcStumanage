@@ -120,7 +120,7 @@ const asyncRouter = [
           {
             path: 'studentmange',
             name: 'studentmange',
-            component: () => import('@/views/admin/studentMange'),
+            component: () => import('@/views/admin/student/studentMange'),
             meta: { title: '学生管理' },
           },
         ],

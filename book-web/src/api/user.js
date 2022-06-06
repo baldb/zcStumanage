@@ -5,7 +5,7 @@ export const login = async (data) =>
   await axiosInstance('/api/logins/login', 'get', data)
 
 // 获取学生列表
-export const getStudent = async ({ pn = 1, offset = 9 } = {}) =>
+export const getStudent = async ({ pn = 1, offset = 8 } = {}) =>
   await axiosInstance('/api/supers/super', 'get', { pn, offset })
 
 // 添加学生接口
