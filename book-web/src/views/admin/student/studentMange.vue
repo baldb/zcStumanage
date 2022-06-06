@@ -1,14 +1,7 @@
 <template>
   <div class="container">
     <div class="student-table__box">
-      <el-button
-        type="primary"
-        @click="
-          visiableForm = true
-          isEdit = false
-          row = null
-        "
-        class="add-btn"
+      <el-button type="primary" @click="handleEdit(null, false)" class="add-btn"
         >添加学生</el-button
       >
       <my-table
@@ -19,7 +12,7 @@
         :offset="offset"
         :page="page"
         @pagination="pageChange"
-        @handleEdit="handleEdit"
+        @handleEdit="(row) => handleEdit(row, true)"
         @handleDelete="handleDelete"
       >
         <template #pic="{ row }">
@@ -52,7 +45,7 @@
     </div>
     <edit-and-creaye-student
       :visible.sync="visiableForm"
-      @success="addStuSuccess"
+      @success="page = 1"
       :is-edit="isEdit"
       :row="row"
     />
@@ -60,97 +53,48 @@
 </template>
 
 <script>
+import column from './column'
 import MyTable from '@/components/Table'
 import editAndCreayeStudent from './editAndCreayeStudent.vue'
 import { getStudent, deleteStudent } from '@/api'
+import myTableMixin from '@/mixin/myTableMixin'
 
 export default {
   name: 'studentmange',
   components: { MyTable, editAndCreayeStudent },
   data() {
     return {
-      header: [
-        {
-          prop: 'pic',
-          label: '头像',
-          fixed: true,
-          width: 60
-        },
-        {
-          prop: 'stuNo',
-          label: '学号',
-          fixed: true
-        },
-        {
-          prop: 'stuName',
-          label: '姓名'
-        },
-        {
-          prop: 'sex',
-          label: '性别',
-          width: 80
-        },
-        {
-          prop: 'phone',
-          label: '手机号'
-        },
-        {
-          prop: 'email',
-          label: '邮箱'
-        },
-        {
-          prop: 'address',
-          label: '地址'
-        },
-        {
-          prop: 'Birth',
-          label: '年龄',
-          width: 50
-        },
-        {
-          prop: 'enroTime',
-          label: '入学时间'
-        }
-      ],
+      header: column,
       tableData: {},
-      tableLoading: false,
       visiableForm: false,
-      offset: 8,
-      page: 1,
       isEdit: false,
       row: {} // 保存选中行
     }
   },
+  mixins: [myTableMixin],
   mounted() {
     this.getStudentList()
   },
   methods: {
-    async getStudentList(info = {}) {
+    async getStudentList() {
       try {
         this.tableLoading = true
-        const { resultSet } = await getStudent(info)
-        console.log('resultSet: ', resultSet)
+        const { resultSet } = await getStudent({
+          pn: this.page,
+          offset: this.offset
+        })
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
         this.tableLoading = false
       }
     },
-
-    pageChange({ page, offset }) {
-      this.page = page
-      this.getStudentList({ pn: page, offset })
-    },
-    handleEdit(row) {
+    handleEdit(row, isEdit) {
       this.row = row
       this.visiableForm = true
-      this.isEdit = true
+      this.isEdit = isEdit
     },
-    // 添加或编辑成功的回调
-    addStuSuccess() {
-      this.page = 1
-      this.getStudentList()
-    },
+
     // 删除学生
     async handleDelete(row) {
       console.log(row)
@@ -166,6 +110,13 @@ export default {
       } catch (error) {
         this.$message.error('删除失败！！')
       }
+    }
+  },
+  watch: {
+    page() {
+      // 重新回去数据
+      console.log(1)
+      this.getStudentList()
     }
   }
 }
