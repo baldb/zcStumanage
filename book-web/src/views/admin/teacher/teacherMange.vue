@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="student-table__box">
+    <div class="Teacher-table__box">
       <el-button type="primary" @click="handleEdit(null, false)" class="add-btn"
-        >添加学生</el-button
+        >添加老师</el-button
       >
       <my-table
         :tableData="tableData.records"
@@ -43,7 +43,7 @@
         </template>
       </my-table>
     </div>
-    <edit-and-creaye-student
+    <edit-and-creaye-Teacher
       :visible.sync="visiableForm"
       @success="editSuccess"
       :is-edit="isEdit"
@@ -55,13 +55,13 @@
 <script>
 import column from './column'
 import MyTable from '@/components/Table'
-import editAndCreayeStudent from './editAndCreayeStudent.vue'
-import { getStudent, deleteStudent } from '@/api'
+import editAndCreayeTeacher from './editAndCreayeTeacher.vue'
+import { getTeacher, deleteTeacher } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 
 export default {
-  name: 'studentmange',
-  components: { MyTable, editAndCreayeStudent },
+  name: 'Teachermange',
+  components: { MyTable, editAndCreayeTeacher },
   data() {
     return {
       header: column,
@@ -73,13 +73,13 @@ export default {
   },
   mixins: [myTableMixin],
   mounted() {
-    this.getStudentList()
+    this.getTeacherList()
   },
   methods: {
-    async getStudentList() {
+    async getTeacherList() {
       try {
         this.tableLoading = true
-        const { resultSet } = await getStudent({
+        const { resultSet } = await getTeacher({
           pn: this.page,
           offset: this.offset
         })
@@ -96,7 +96,7 @@ export default {
     },
     editSuccess() {
       this.page = 1
-      this.getStudentList()
+      this.getTeacherList()
     },
 
     // 删除学生
@@ -104,13 +104,13 @@ export default {
       console.log(row)
       if (!row.stuNo) return
       try {
-        await deleteStudent({ stuNo: row.stuNo })
+        await deleteTeacher({ stuNo: row.stuNo })
         this.$message.success('删除成功!!')
         // 获取页码
         const lat = this.tableData.records.length === 1 && this.page !== 1
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
-        await this.getStudentList({ pn: this.page })
+        await this.getTeacherList({ pn: this.page })
       } catch (error) {
         this.$message.error('删除失败！！')
       }
@@ -119,7 +119,7 @@ export default {
   watch: {
     page() {
       // 重新回去数据
-      this.getStudentList()
+      this.getTeacherList()
     }
   }
 }
@@ -130,7 +130,7 @@ export default {
   padding: 20px 0 0;
   box-sizing: border-box;
 }
-.student-table__box {
+.Teacher-table__box {
   margin: 0 auto;
   max-width: 90%;
   overflow: hidden;

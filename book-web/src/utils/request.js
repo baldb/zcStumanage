@@ -35,8 +35,8 @@ service.interceptors.response.use(
       })
       return Promise.reject(error)
     }
-    const { res } = error.response.data
-    console.log('res: ', res)
+    const res = error.response.data
+
     Notification.error({
       title: res.msg,
       message: res.status,
