@@ -1,6 +1,7 @@
 package com.wula.stumanage.service.utilservice;
 
 import com.wula.stumanage.pojo.Student;
+import com.wula.stumanage.pojo.Teacher;
 import com.wula.stumanage.pojo.User;
 import com.wula.stumanage.pojo.utils.ResCode;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ public interface IResCodeService {
      */
     ResCode getPageOnCode(int pn,
                       int offset,
+                      String stuName,
                       HttpServletResponse response);
 
     /**
@@ -28,7 +30,7 @@ public interface IResCodeService {
      * @param name
      * @return
      */
-    User addUser(String name,String ID);
+    User addUser(String name,String ID,String password);
 
     /**
      * 返回学生的全部信息
@@ -51,4 +53,24 @@ public interface IResCodeService {
      * @return
      */
     ResCode addStuAndUser(Student student,HttpServletResponse response);
+
+    /**
+     * **********************************************************************************
+     */
+    /**
+     * 老师的分页信息查询
+     */
+    ResCode getPageForTeacher(int pn,
+                          int offset,
+                          String name,
+                          HttpServletResponse response);
+    /**
+     * 添加老师信息
+     */
+    ResCode addForTeacher(Teacher teacher,HttpServletResponse response);
+
+    /**
+     * 删除老师信息
+     */
+    ResCode delTeacherById(Integer id);
 }

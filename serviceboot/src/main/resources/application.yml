@@ -22,11 +22,12 @@ spring:
 #     设置图片最大值
       max-file-size: 10MB
       max-request-size: 100MB
+  jackson:
+    time-zone: GMT+8
 #id自增策略
 mybatis-plus:
-#  global-config:
-#    db-config:
-#      id-type: auto
+  global-config:
+    db-config:
+      id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出在控制台上   打开mybatis-plus日志
-
