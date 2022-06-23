@@ -37,6 +37,8 @@ import {
   DatePicker,
   Upload,
   Popconfirm,
+  Select,
+  Option,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -74,6 +76,8 @@ Vue.use(RadioGroup)
 Vue.use(DatePicker)
 Vue.use(Upload)
 Vue.use(Popconfirm)
+Vue.use(Select)
+Vue.use(Option)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

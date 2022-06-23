@@ -18,7 +18,7 @@
       >
         <template slot-scope="scope">
           <slot :row="scope.row" :name="item.prop">{{
-            scope.row[item.prop]
+            scope.row[item.prop] || '-'
           }}</slot>
         </template>
       </el-table-column>
