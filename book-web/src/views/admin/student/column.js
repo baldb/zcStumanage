@@ -9,6 +9,7 @@ export default [
     prop: 'stuNo',
     label: '学号',
     fixed: true,
+    width: 100,
   },
   {
     prop: 'stuName',

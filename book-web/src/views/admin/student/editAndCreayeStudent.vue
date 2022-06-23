@@ -121,7 +121,20 @@ export default {
         this.$refs['ruleForm'].resetFields()
         this.form.pic = ''
       } else {
-        Object.assign(this.form, this.row || {})
+        Object.assign(
+          this.form,
+          this.row || {
+            stuNo: null,
+            stuName: '',
+            sex: '',
+            phone: '',
+            email: '',
+            address: '',
+            Birth: '',
+            pic: '',
+            enroTime: ''
+          }
+        )
       }
     },
     visible(isv) {
@@ -134,9 +147,8 @@ export default {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           try {
-            ;(await this.isEdit)
-              ? editStudent(this.form)
-              : addStudent(this.form)
+            const ismethod = this.isEdit ? editStudent : addStudent
+            await ismethod(this.form)
             this.$message.success((this.isEdit ? '修改' : '添加') + '成功!!')
             this.$emit('success')
             this.dialogFormVisible = false

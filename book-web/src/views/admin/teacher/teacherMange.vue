@@ -11,29 +11,15 @@
         :loading="tableLoading"
         :offset="offset"
         :page="page"
+        width="700px"
         @pagination="pageChange"
         @handleEdit="(row) => handleEdit(row, true)"
         @handleDelete="handleDelete"
       >
-        <template #pic="{ row }">
-          <el-avatar size="medium" :src="row.pic | hostPath">
+        <template #teachPic="{ row }">
+          <el-avatar size="medium" :src="row.teachPic | hostPath">
             <img src="~assets/pic.png"
           /></el-avatar>
-        </template>
-
-        <!-- 姓名插槽 -->
-        <template #stuName="{ row }">
-          <el-popover trigger="hover" placement="top">
-            <p>姓名: {{ row.stuName }}</p>
-            <p>住址: {{ row.address }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag type="warning"> {{ row.stuName }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-
-        <template #Birth="{ row }">
-          {{ row.Birth | transTimeAge }}
         </template>
 
         <template #sex="{ row }">
@@ -90,27 +76,28 @@ export default {
       }
     },
     handleEdit(row, isEdit) {
+      console.log('row: ', row)
       this.row = row
       this.visiableForm = true
       this.isEdit = isEdit
     },
     editSuccess() {
-      this.page = 1
+      // this.page = 1
       this.getTeacherList()
     },
 
-    // 删除学生
+    // 删除老师
     async handleDelete(row) {
       console.log(row)
-      if (!row.stuNo) return
+      if (!row.teachNo) return
       try {
-        await deleteTeacher({ stuNo: row.stuNo })
+        await deleteTeacher({ teachNo: row.teachNo })
         this.$message.success('删除成功!!')
         // 获取页码
         const lat = this.tableData.records.length === 1 && this.page !== 1
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
-        await this.getTeacherList({ pn: this.page })
+        await this.getTeacherList()
       } catch (error) {
         this.$message.error('删除失败！！')
       }

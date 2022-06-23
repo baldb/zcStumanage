@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <el-table border :data="tableData" style="width: 100%" v-loading="loading">
+  <div class="table-box">
+    <el-table
+      border
+      :data="tableData"
+      :style="{ width: width }"
+      v-loading="loading"
+    >
       <el-table-column
         v-for="item in header"
         :label="item.label"
@@ -20,7 +25,10 @@
       <el-table-column label="操作" v-if="isEdit" fixed="right">
         <template slot-scope="scope">
           <slot name="edit" :edit="scope.row">
-            <el-button size="mini" @click="handleEdit(scope.row)"
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.row)"
+              style="margin-right: 10px"
               >编辑</el-button
             >
             <el-popconfirm
@@ -59,7 +67,11 @@ export default {
     loading: { type: Boolean, default: false },
     total: { type: Number, default: 0 },
     offset: { type: Number },
-    page: { type: Number }
+    page: { type: Number },
+    width: {
+      type: [Number, String],
+      default: '100%'
+    }
   },
   data() {
     return {}
@@ -76,4 +88,11 @@ export default {
 </script>
 
 <style scoped>
+.table-box {
+  width: 100%;
+}
+
+.table-box .el-table {
+  margin: 0 auto;
+}
 </style>

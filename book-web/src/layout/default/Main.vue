@@ -78,7 +78,8 @@ export default {
   padding: 0 10px 10px;
   box-sizing: border-box;
 }
-
+.contexnt-box .container {
+}
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }

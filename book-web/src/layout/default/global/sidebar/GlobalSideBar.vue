@@ -9,7 +9,7 @@
       <div>
         {{ username }}
         <el-tag :type="istype" hit style="vertical-align: middle">{{
-          indentity
+          indentity | tansiIndentity
         }}</el-tag>
       </div>
     </div>
@@ -57,7 +57,18 @@ export default {
       return ''
     }
   },
-  mounted() {}
+  mounted() {},
+  filters: {
+    tansiIndentity(value) {
+      const t = {
+        admin: '管理员',
+        teacher: '教师',
+        student: '学生'
+      }
+
+      return t[value]
+    }
+  }
 }
 </script>
 

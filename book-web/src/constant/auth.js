@@ -7,7 +7,7 @@ const IDENT_ENUM = {
   1: {
     value: 'teacher',
     text: '教师',
-    status: 'info',
+    status: 'warning',
   },
   2: {
     value: 'student',

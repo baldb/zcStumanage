@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       tableLoading: false,
-      offset: 8,
+      offset: 9,
       page: 1,
     }
   },

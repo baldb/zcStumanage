@@ -34,7 +34,7 @@ export default {
 
         case 2:
           this.$store.dispatch('user/logout').then(() => {
-            location.reload()
+            this.$router.go(0)
           })
           break
       }

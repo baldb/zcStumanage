@@ -95,7 +95,7 @@ export default {
       this.isEdit = isEdit
     },
     editSuccess() {
-      this.page = 1
+      // this.page = 1
       this.getStudentList()
     },
 
@@ -110,7 +110,7 @@ export default {
         const lat = this.tableData.records.length === 1 && this.page !== 1
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
-        await this.getStudentList({ pn: this.page })
+        await this.getStudentList()
       } catch (error) {
         this.$message.error('删除失败！！')
       }
