@@ -19,4 +19,9 @@ export default [
     label: '性别',
     width: 80,
   },
+  {
+    prop: 'age',
+    label: '年龄',
+    width: 80,
+  },
 ]

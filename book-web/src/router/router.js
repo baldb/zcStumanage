@@ -135,6 +135,12 @@ const asyncRouter = [
             component: () => import('@/views/admin/class/classMange'),
             meta: { title: '班级管理' },
           },
+          {
+            path: 'coursemange',
+            name: 'coursemange',
+            component: () => import('@/views/admin/course/courseMange'),
+            meta: { title: '课程管理' },
+          },
         ],
       },
     ],

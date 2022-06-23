@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="Teacher-table__box">
+    <div class="course-table__box">
       <el-button type="primary" @click="handleEdit(null, false)" class="add-btn"
-        >添加老师</el-button
+        >添加课程</el-button
       >
       <my-table
         :tableData="tableData.records"
@@ -11,25 +11,36 @@
         :loading="tableLoading"
         :offset="offset"
         :page="page"
-        width="850px"
+        width="700px"
         @pagination="pageChange"
-        @handleEdit="(row) => handleEdit(row, true)"
-        @handleDelete="handleDelete"
       >
-        <template #teachPic="{ row }">
-          <el-avatar size="medium" :src="row.teachPic | hostPath">
-            <img src="~assets/pic.png"
-          /></el-avatar>
+        <template #teachName="{ row }">
+          {{ (row.teachMessage && row.teachMessage['teachName']) || '-' }}
         </template>
-
-        <template #sex="{ row }">
-          <el-tag :type="row.sex === '男' ? 'success' : 'danger'">
-            {{ row.sex || '未知' }}</el-tag
+        <template #edit="{ edit }">
+          <el-button type="primary" size="mini">查看</el-button>
+          <el-button
+            size="mini"
+            @click="handleEdit(edit, true)"
+            style="margin-right: 10px"
+            >编辑</el-button
           >
+          <el-popconfirm
+            confirm-button-text="好的"
+            cancel-button-text="不用了"
+            icon="el-icon-info"
+            icon-color="red"
+            title="确定删除？"
+            @confirm="handleDelete(edit)"
+          >
+            <el-button slot="reference" size="mini" type="danger"
+              >删除</el-button
+            >
+          </el-popconfirm>
         </template>
       </my-table>
     </div>
-    <edit-and-creaye-Teacher
+    <edit-and-creaye-course
       :visible.sync="visiableForm"
       @success="editSuccess"
       :is-edit="isEdit"
@@ -41,13 +52,13 @@
 <script>
 import column from './column'
 import MyTable from '@/components/Table'
-import editAndCreayeTeacher from './editAndCreayeTeacher.vue'
-import { getTeacher, deleteTeacher } from '@/api'
+import editAndCreayeCourse from './editAndCreayeCourse.vue'
+import { getCourse, deleteCourse } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 
 export default {
-  name: 'Teachermange',
-  components: { MyTable, editAndCreayeTeacher },
+  name: 'coursemange',
+  components: { MyTable, editAndCreayeCourse },
   data() {
     return {
       header: column,
@@ -59,16 +70,19 @@ export default {
   },
   mixins: [myTableMixin],
   mounted() {
-    this.getTeacherList()
+    this.getcourseList()
   },
   methods: {
-    async getTeacherList() {
+    async getcourseList() {
       try {
         this.tableLoading = true
-        const { resultSet } = await getTeacher({
+
+        const { page: resultSet } = await getCourse({
           pn: this.page,
           offset: this.offset
         })
+
+        console.log('resultSet: ', resultSet)
         this.tableData = resultSet
         this.tableLoading = false
       } catch (error) {
@@ -82,22 +96,20 @@ export default {
       this.isEdit = isEdit
     },
     editSuccess() {
-      // this.page = 1
-      this.getTeacherList()
+      this.getcourseList()
     },
 
-    // 删除老师
     async handleDelete(row) {
       console.log(row)
-      if (!row.teachNo) return
+      if (!row.courseId) return
       try {
-        await deleteTeacher({ teachNo: row.teachNo })
+        await deleteCourse({ courseId: row.courseId })
         this.$message.success('删除成功!!')
         // 获取页码
         const lat = this.tableData.records.length === 1 && this.page !== 1
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
-        await this.getTeacherList()
+        await this.getcourseList()
       } catch (error) {
         this.$message.error('删除失败！！')
       }
@@ -106,7 +118,7 @@ export default {
   watch: {
     page() {
       // 重新回去数据
-      this.getTeacherList()
+      this.getcourseList()
     }
   }
 }
@@ -117,7 +129,7 @@ export default {
   padding: 20px 0 0;
   box-sizing: border-box;
 }
-.Teacher-table__box {
+.course-table__box {
   margin: 0 auto;
   max-width: 90%;
   overflow: hidden;

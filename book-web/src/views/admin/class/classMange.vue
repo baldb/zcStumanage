@@ -30,7 +30,7 @@
             cancel-button-text="不用了"
             icon="el-icon-info"
             icon-color="red"
-            title="确实删除？"
+            title="确定删除？"
             @confirm="handleDelete(edit)"
           >
             <el-button slot="reference" size="mini" type="danger"

@@ -6,18 +6,18 @@
       destroy-on-close
     >
       <el-form :model="form" label-width="100px" :rules="rules" ref="ruleForm">
-        <el-form-item label="班级编号" prop="classId">
+        <el-form-item label="课程编号" prop="courseId">
           <el-input
-            v-model.number="form.classId"
+            v-model.number="form.courseId"
             autocomplete="off"
             :disabled="this.isEdit"
           ></el-input>
         </el-form-item>
-        <el-form-item label="班级名称" prop="className">
-          <el-input v-model="form.className" autocomplete="off"></el-input>
+        <el-form-item label="课程名称" prop="courseName">
+          <el-input v-model="form.courseName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="班主任" prop="techNo">
-          <el-select v-model="form.techNo" placeholder="请选择辅导员">
+        <el-form-item label="任课老师" prop="techNo">
+          <el-select v-model="form.techNo" placeholder="选择任课老师">
             <el-option
               v-for="item in teacherList"
               :key="item.teachNo"
@@ -30,7 +30,7 @@
         </el-form-item>
       </el-form>
 
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" course="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </div>
@@ -40,7 +40,7 @@
 
 <script>
 import Upload from '@/components/Upload'
-import { addClass, editClass, getTeacher } from '@/api'
+import { addCourse, editCourse, getTeacher } from '@/api'
 
 export default {
   name: 'editAndCreayeStudent',
@@ -48,17 +48,19 @@ export default {
     return {
       dialogFormVisible: this.visible,
       form: {
-        classId: null,
-        className: '',
+        courseId: null,
+        courseName: '',
         techNo: ''
       },
       formLabelWidth: '120px',
       rules: {
-        classId: [
+        courseId: [
           { required: true, message: '请输入班级编号', trigger: 'blur' },
           { type: 'number', message: '班级编号必须是数字' }
         ],
-        className: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        courseName: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
+        ],
         techNo: [{ required: true, message: '请选择老师', trigger: 'click' }]
       },
       teacherList: []
@@ -86,11 +88,12 @@ export default {
           this.form,
 
           this.row || {
-            classId: null,
-            className: '',
+            courseId: null,
+            courseName: '',
             techNo: ''
           }
         )
+
         this.getTeacher()
       }
     },
@@ -104,7 +107,7 @@ export default {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           try {
-            const ismethod = this.isEdit ? editClass : addClass
+            const ismethod = this.isEdit ? editCourse : addCourse
             await ismethod(this.form)
             this.$message.success((this.isEdit ? '修改' : '添加') + '成功!!')
             this.$emit('success')
