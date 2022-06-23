@@ -28,7 +28,7 @@ public class Student {
     private String Email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @JsonFormat(timezone = "",pattern = "yyyy-MM-dd")
     private Date Birth;
 
     @TableField(updateStrategy = FieldStrategy.IGNORED)
@@ -45,7 +45,7 @@ public class Student {
      * 入学日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @JsonFormat(timezone = "",pattern = "yyyy-MM-dd")
     private Date enroTime;
     /**
      * 创建日期

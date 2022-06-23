@@ -100,6 +100,12 @@
             <version>3.6.1</version>
             <scope>compile</scope>
         </dependency>
+<!--        中文转换拼音包-->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+        </dependency>
     </dependencies>
 
 

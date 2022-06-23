@@ -1,6 +1,8 @@
 package com.wula.stumanage.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wula.stumanage.pojo.Student;
+import com.wula.stumanage.pojo.User;
 import com.wula.stumanage.pojo.utils.ResCode;
 import com.wula.stumanage.service.IStudentService;
 import com.wula.stumanage.service.IUserService;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 林逸
@@ -51,8 +56,9 @@ public class SuperUserController {
     @GetMapping("/super")
     public ResCode getStu(@RequestParam(value = "pn",defaultValue = "0") int pn ,
                           @RequestParam(value = "offset",defaultValue = "0") int offset ,
+                          @RequestParam(value = "stuName",required = false) String name,
                           HttpServletResponse response){
-            return resCodeService.getPageOnCode(pn,offset, response);
+            return resCodeService.getPageOnCode(pn,offset,name,response);
 
     }
     /**
@@ -82,6 +88,7 @@ public class SuperUserController {
     @ResponseBody
     public ResCode addStutes(@RequestBody Student student,
                           HttpServletResponse response){
+        System.out.println(student);
         return resCodeService.addStuAndUser(student,response);
     }
 
@@ -91,6 +98,11 @@ public class SuperUserController {
     @DeleteMapping("/super")
     public ResCode delete(@RequestParam("stuNo") Integer stuNo){
         boolean b = studentService.removeById(stuNo);
+        if(b){
+            LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+            lqw.eq(b, User::getUserName, stuNo + "");
+            boolean u = userService.remove(lqw);
+        }
         ResCode resCode = new ResCode();
         resCode.CodeAll(b,null);
         return resCode;
@@ -106,5 +118,17 @@ public class SuperUserController {
         Student byId = studentService.getById(student.getStuNo());
         studentResCode.CodeAll(b,byId);
         return studentResCode;
+    }
+
+    /**
+     * 查询功能，根据学生姓名来查询学生信息
+     */
+    @GetMapping("/name")
+    public ResCode selByName(@RequestParam("stuName") String name){
+        System.out.println("根据姓名查询");
+        List<Student> stuByName = studentService.getStuByName(name);
+        ResCode objectResCode = new ResCode();
+        objectResCode.CodeAll(name!=null,stuByName);
+        return objectResCode;
     }
 }
