@@ -5,7 +5,7 @@ const namespaced = true
 
 const hashpermissionRoute = (route, indentity) => {
   if (
-    indentity === IDENT_ENUM[0].value ||
+    // indentity === IDENT_ENUM[0].value ||
     !route.meta?.role ||
     route.meta.role?.includes(indentity)
   ) {

@@ -49,7 +49,7 @@ const asyncRouter = [
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/Home'),
-        meta: { title: '首页', icon: 'el-icon-eleme' },
+        meta: { title: '首页' },
       },
 
       {
@@ -95,54 +95,64 @@ const asyncRouter = [
           {
             path: 'studentsList', // 学生列表
             name: 'studentsList',
-            component: () => import('@/views/teacher/akleaveinfo'),
+            component: () => import('@/views/teacher/StudentsList'),
             meta: { title: '学生列表' },
           },
 
           {
             path: 'askleaveinfo', // 请假列表
             name: 'askleaveinfo',
-            component: () => import('@/views/teacher/StudentsList'),
+            component: () => import('@/views/teacher/akleaveinfo'),
             meta: { title: '请假列表', showBadge: true },
           },
         ],
       },
+      // {
+      //   path: 'manage',
+      //   name: 'manage',
+      //   redirect: '/passed/student/studentmange',
+      //   meta: {
+      //     role: [IDENT_ENUM[0].value],
+      //     title: '管理员',
+      //     icon: 'el-icon-remove',
+      //   },
+      //   children: [
       {
-        path: 'manage',
-        name: 'manage',
-        redirect: '/passed/student/studentmange',
-        meta: {
-          role: [IDENT_ENUM[0].value],
-          title: '管理员',
-          icon: 'el-icon-remove',
-        },
-        children: [
-          {
-            path: 'studentmange',
-            name: 'studentmange',
-            component: () => import('@/views/admin/student/studentMange'),
-            meta: { title: '学生管理' },
-          },
-          {
-            path: 'teachermange',
-            name: 'teachermange',
-            component: () => import('@/views/admin/teacher/teacherMange'),
-            meta: { title: '教师管理' },
-          },
-          {
-            path: 'classmange',
-            name: 'classmange',
-            component: () => import('@/views/admin/class/classMange'),
-            meta: { title: '班级管理' },
-          },
-          {
-            path: 'coursemange',
-            name: 'coursemange',
-            component: () => import('@/views/admin/course/courseMange'),
-            meta: { title: '课程管理' },
-          },
-        ],
+        path: 'studentmange',
+        name: 'studentmange',
+        component: () => import('@/views/admin/student/studentMange'),
+        meta: { title: '学生管理', role: [IDENT_ENUM[0].value] },
       },
+      {
+        path: 'teachermange',
+        name: 'teachermange',
+        component: () => import('@/views/admin/teacher/teacherMange'),
+        meta: { title: '教师管理', role: [IDENT_ENUM[0].value] },
+      },
+      {
+        path: 'classmange',
+        name: 'classmange',
+        component: () => import('@/views/admin/class/classMange'),
+        meta: { title: '班级管理', role: [IDENT_ENUM[0].value] },
+      },
+      {
+        path: 'coursemange',
+        name: 'coursemange',
+        component: () => import('@/views/admin/course/courseMange'),
+        meta: { title: '课程管理', role: [IDENT_ENUM[0].value] },
+      },
+      {
+        path: 'askleaveinfo', // 请假列表
+        name: 'askleaveinfo',
+        component: () => import('@/views/teacher/akleaveinfo'),
+        meta: {
+          title: '请假列表',
+          showBadge: true,
+          role: [IDENT_ENUM[0].value],
+        },
+      },
+      //   ],
+      // },
     ],
   },
 ]

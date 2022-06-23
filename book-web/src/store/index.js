@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     getAccessRouter: (state) => state.menu.accessRouter,
     getTagList: (state) => state.menu.tagList,
     getActiveMenu: (state) => state.menu.activeMenu,
+    getuserinfo: (state) => state.user.userinfo,
   },
   modules: {
     menu: menuModule,

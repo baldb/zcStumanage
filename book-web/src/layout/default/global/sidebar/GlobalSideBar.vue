@@ -3,11 +3,11 @@
     <div class="user-info">
       <el-avatar
         icon="el-icon-user-solid"
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        :src="getUrl"
         :size="100"
       ></el-avatar>
       <div>
-        {{ username }}
+        {{ getusername }}
         <el-tag :type="istype" hit style="vertical-align: middle">{{
           indentity | tansiIndentity
         }}</el-tag>
@@ -36,7 +36,9 @@ import { IDENT_ENUM } from '@/constant/auth'
 export default {
   name: 'sirdebar',
   data() {
-    return {}
+    return {
+      hostPath: process.env.VUE_APP_BASURL + '/images/'
+    }
   },
   props: {
     isCollapse: { tyee: Boolean, default: false },
@@ -46,7 +48,7 @@ export default {
     SiderItem
   },
   computed: {
-    ...mapGetters(['getActiveMenu', 'username', 'indentity']),
+    ...mapGetters(['getActiveMenu', 'username', 'indentity', 'getuserinfo']),
     istype() {
       // 获取状态
       for (const k in IDENT_ENUM) {
@@ -55,6 +57,17 @@ export default {
         }
       }
       return ''
+    },
+    getusername() {
+      if (this?.indentity === 'admin') return this.username
+      const isTeachr = this.indentity === 'teacher' ? 'teachName' : 'stuName'
+      return this.getuserinfo[isTeachr]
+    },
+    getUrl() {
+      if (this?.indentity === 'admin')
+        return 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      const isTeachr = this.indentity === 'teacher' ? 'teachPic' : 'pic'
+      return this.hostPath + this.getuserinfo[isTeachr]
     }
   },
   mounted() {},

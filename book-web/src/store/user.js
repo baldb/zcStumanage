@@ -1,5 +1,5 @@
 import { IDENT_ENUM } from '../constant/auth'
-import { login } from '../api'
+import { login, loginStu, loginTeacher } from '../api'
 import router, { resetRouter } from '../router'
 import { setStorage, removeStorage, getStorage } from '../utils/storageUtil'
 const namespaced = true
@@ -7,6 +7,7 @@ const namespaced = true
 const state = () => ({
   username: '',
   identity: '',
+  userinfo: null,
 })
 
 const mutations = {
@@ -14,7 +15,10 @@ const mutations = {
     state.identity = IDENT_ENUM[payload.identity]?.value ?? null
     state.username = payload.userName ?? null
   },
-  // 获取用户
+  // 设置学生信息
+  setUIN(state, payload) {
+    state.userinfo = payload
+  },
 }
 
 const actions = {
@@ -23,6 +27,7 @@ const actions = {
     if (status !== 200) return dispatch('logout')
     setStorage('userinfo', resultSet)
     commit('setUserInfo', resultSet)
+    dispatch('getUserInfo')
   },
 
   // 退出登录重置路由
@@ -35,11 +40,25 @@ const actions = {
     resetRouter()
   },
 
+  // 获取用户详细信息
+  async getUserInfo({ commit, rootGetters }) {
+    let resultSet
+    if (rootGetters.indentity === 'student') {
+      ;({ resultSet } = await loginStu({ stuId: rootGetters.username }))
+    } else if (rootGetters.indentity === 'teacher') {
+      ;({ resultSet } = await loginTeacher({ teacherId: rootGetters.username }))
+    }
+    if (resultSet) {
+      commit('setUIN', resultSet)
+    }
+  },
+
   // 获取用户
-  async getUser({ commit }) {
+  async getUser({ commit, dispatch }) {
     const userinfo = getStorage('userinfo')
     if (!userinfo) return null
     commit('setUserInfo', userinfo)
+    dispatch('getUserInfo')
     return userinfo
   },
 }
