@@ -41,7 +41,7 @@
 <script>
 import column from './column'
 import MyTable from '@/components/Table'
-import editAndCreayeTeacher from './editAndCreayeTeacher.vue'
+import editAndCreayeTeacher from '../../../components/editAndCreayeTeacher.vue'
 import { getTeacher, deleteTeacher } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 

@@ -55,7 +55,7 @@
 <script>
 import column from './column'
 import MyTable from '@/components/Table'
-import editAndCreayeStudent from './editAndCreayeStudent.vue'
+import editAndCreayeStudent from '../../../components/editAndCreayeStudent.vue'
 import { getStudent, deleteStudent } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 

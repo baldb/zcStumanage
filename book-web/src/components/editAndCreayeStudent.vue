@@ -1,20 +1,20 @@
 <template>
   <div>
     <el-dialog
-      :title="(isEdit ? '修改' : '添加') + '老师信息'"
+      :title="(isEdit ? '修改' : '添加') + '学生信息'"
       :visible.sync="dialogFormVisible"
       destroy-on-close
     >
       <el-form :model="form" label-width="100px" :rules="rules" ref="ruleForm">
-        <el-form-item label="教师号" prop="teachNo">
+        <el-form-item label="学号" prop="stuNo">
           <el-input
-            v-model.number="form.teachNo"
+            v-model.number="form.stuNo"
             autocomplete="off"
             :disabled="this.isEdit"
           ></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="teachName">
-          <el-input v-model="form.teachName" autocomplete="off"></el-input>
+        <el-form-item label="姓名" prop="stuName">
+          <el-input v-model="form.stuName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-radio-group v-model="form.sex">
@@ -22,16 +22,38 @@
             <el-radio label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-input v-model.number="form.age" autocomplete="off"></el-input>
+        <el-form-item label="出生日期" prop="Birth">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.Birth"
+            style="width: 100%"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item label="头像" prop="teachPic">
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model.number="form.phone" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮件" prop="email">
+          <el-input v-model="form.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="form.address" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="头像" prop="pic">
           <upload
             @success="uploadSuccess"
             @remove="uploadRemove"
-            :picUrl="form.teachPic"
+            :picUrl="form.pic"
             :baseurl="hostPath"
           ></upload>
+        </el-form-item>
+        <el-form-item label="入学日期" prop="enroTime">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.enroTime"
+            style="width: 100%"
+          ></el-date-picker>
         </el-form-item>
       </el-form>
 
@@ -44,8 +66,8 @@
 </template>
 
 <script>
-import Upload from '@/components/Upload'
-import { addTeacher, editTeacher } from '@/api'
+import Upload from './Upload'
+import { addStudent, editStudent } from '@/api'
 
 export default {
   name: 'editAndCreayeStudent',
@@ -53,21 +75,31 @@ export default {
     return {
       dialogFormVisible: this.visible,
       form: {
-        teachNo: null,
-        teachName: '',
+        stuNo: null,
+        stuName: '',
         sex: '',
-        age: '',
-        teachPic: ''
+        phone: '',
+        email: '',
+        address: '',
+        Birth: '',
+        pic: '',
+        enroTime: ''
       },
       formLabelWidth: '120px',
       rules: {
         stuNo: [
-          { required: true, message: '请输入教室编号', trigger: 'blur' },
-          { type: 'number', message: '教室编号必须是数字' }
+          { required: true, message: '请输入学号', trigger: 'blur' },
+          { type: 'number', message: '学号必须是数字' }
         ],
         stuName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'click' }],
-        age: [{ required: true, message: '请输入年龄', trigger: 'click' }]
+        phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+        email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+        address: [{ required: true, message: '请输入地址', trigger: 'blur' }],
+        enroTime: [
+          { required: true, message: '请输入学日期', trigger: 'blur' }
+        ],
+        Birth: [{ required: true, message: '请选择出生日期', trigger: 'blur' }]
       },
       hostPath: process.env.VUE_APP_BASURL + '/images/'
     }
@@ -87,16 +119,20 @@ export default {
 
       if (!isv) {
         this.$refs['ruleForm'].resetFields()
-        this.form.teachPic = ''
+        this.form.pic = ''
       } else {
         Object.assign(
           this.form,
           this.row || {
-            teachNo: null,
-            teachName: '',
+            stuNo: null,
+            stuName: '',
             sex: '',
-            age: '',
-            teachPic: ''
+            phone: '',
+            email: '',
+            address: '',
+            Birth: '',
+            pic: '',
+            enroTime: ''
           }
         )
       }
@@ -111,7 +147,7 @@ export default {
       this.$refs['ruleForm'].validate(async (valid) => {
         if (valid) {
           try {
-            const ismethod = this.isEdit ? editTeacher : addTeacher
+            const ismethod = this.isEdit ? editStudent : addStudent
             await ismethod(this.form)
             this.$message.success((this.isEdit ? '修改' : '添加') + '成功!!')
             this.$emit('success')
@@ -125,10 +161,10 @@ export default {
     },
     uploadSuccess(res) {
       const { response } = res
-      this.form.teachPic = response.resultSet
+      this.form.pic = response.resultSet
     },
     uploadRemove() {
-      this.form.teachPic = undefined
+      this.form.pic = undefined
     }
   }
 }
