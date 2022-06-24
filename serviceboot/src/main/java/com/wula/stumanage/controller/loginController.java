@@ -1,10 +1,15 @@
 package com.wula.stumanage.controller;
 
+import com.wula.stumanage.pojo.Student;
+import com.wula.stumanage.pojo.Teacher;
 import com.wula.stumanage.pojo.User;
 import com.wula.stumanage.pojo.utils.ResCode;
+import com.wula.stumanage.service.IStudentService;
+import com.wula.stumanage.service.ITeacherService;
 import com.wula.stumanage.service.IUserService;
 import com.wula.stumanage.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,5 +54,35 @@ public class loginController {
             userResCode.setMsg(userService.judgeNP(name, password));
         }
         return userResCode;
+    }
+
+    @Autowired
+    private IStudentService studentService;
+
+    /**
+     * 根据学生ID查询基本信息
+     * @param stuId
+     * @param response
+     * @return
+     */
+    @GetMapping("/stu")
+    public ResCode getStuById(@RequestParam("stuId") Integer stuId,
+                              HttpServletResponse response){
+        Student student = studentService.getById(stuId);
+        ResCode<Student> studentResCode = new ResCode<>();
+        studentResCode.CodeAll(student!=null,student);
+        return studentResCode;
+    }
+
+    @Autowired
+    private ITeacherService teacherService;
+
+    @GetMapping("/teacher")
+    public ResCode getTeacherById(@RequestParam("teacherId") Integer teacherId,
+                                  HttpServletResponse response){
+        Teacher teacher = teacherService.getById(teacherId);
+        ResCode<Teacher> teacherResCode = new ResCode<>();
+        teacherResCode.CodeAll(teacher!=null,teacher);
+        return teacherResCode;
     }
 }

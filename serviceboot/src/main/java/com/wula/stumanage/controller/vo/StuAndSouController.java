@@ -1,7 +1,7 @@
 package com.wula.stumanage.controller.vo;
 
 import com.wula.stumanage.pojo.votest.StuAndSou;
-import com.wula.stumanage.service.avo.IStuAndSouService;
+import com.wula.stumanage.service.combination.IStuAndSouService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

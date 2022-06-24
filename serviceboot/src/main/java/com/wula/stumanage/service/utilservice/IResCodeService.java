@@ -17,6 +17,15 @@ import java.util.Map;
 public interface IResCodeService {
 
     /**
+     * 班级的分页查询信息
+     * @param pn
+     * @param offset
+     * @param name
+     * @param response
+     * @return
+     */
+    ResCode getClassPage(int pn, int offset, String name, HttpServletResponse response);
+    /**
      * 封装分页查询所有信息
      * @return
      */
@@ -73,4 +82,13 @@ public interface IResCodeService {
      * 删除老师信息
      */
     ResCode delTeacherById(Integer id);
+
+
+    /**
+     * 查询班级的信息
+     */
+    ResCode selZcClass(int pn,
+                       int offset,
+                       String name,
+                       HttpServletResponse response);
 }

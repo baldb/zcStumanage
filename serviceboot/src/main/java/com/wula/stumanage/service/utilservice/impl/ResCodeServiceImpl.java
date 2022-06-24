@@ -1,30 +1,27 @@
 package com.wula.stumanage.service.utilservice.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wula.stumanage.pojo.Student;
 import com.wula.stumanage.pojo.Teacher;
 import com.wula.stumanage.pojo.User;
-import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
+import com.wula.stumanage.pojo.ZcClass;
+import com.wula.stumanage.pojo.combination.ClassAndTeach;
 import com.wula.stumanage.pojo.utils.PageUtil;
 import com.wula.stumanage.pojo.utils.ResCode;
 import com.wula.stumanage.pojo.utils.StudentList;
-import com.wula.stumanage.service.IStudentAndSourceService;
-import com.wula.stumanage.service.IStudentService;
-import com.wula.stumanage.service.ITeacherService;
-import com.wula.stumanage.service.IUserService;
+import com.wula.stumanage.service.*;
+import com.wula.stumanage.service.combination.IClassAndTeachService;
 import com.wula.stumanage.service.utilservice.IResCodeService;
 import com.wula.stumanage.utils.MD5Util;
-import com.wula.stumanage.utils.PinYInUtil;
 import com.wula.stumanage.utils.UploadPhotoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +33,8 @@ import java.util.Map;
  */
 @Service
 public class ResCodeServiceImpl implements IResCodeService {
-    @Autowired
-    private IStudentAndSourceService iStudentAndSourceService;
+//    @Autowired
+//    private IStudentAndSourceService iStudentAndSourceService;
     @Autowired
     private IUserService userService;
     @Autowired
@@ -46,9 +43,70 @@ public class ResCodeServiceImpl implements IResCodeService {
     @Autowired
     public ITeacherService teacherService;
 
+    @Autowired
+    private ZcClassService zcClassService;
+
+    @Autowired
+    private IClassAndTeachService classAndTeachService;
+
+    @Override
+    public ResCode getClassPage(int pn, int offset, String name, HttpServletResponse response) {
+        ResCode<ClassAndTeach> classAndTeachResCode = new ResCode<>();
+        QueryWrapper<ClassAndTeach> qwr = new QueryWrapper<>();
+        qwr.orderByDesc("create_time");
+        PageUtil<ClassAndTeach> pageUtil = new PageUtil<>();
+
+        if(pn!=0 || offset!=0 || name!=null){
+            if(name==null){ //名字为空
+                if(offset!=0)
+                    pageUtil.setOffSet(offset);
+                Page<ClassAndTeach> page = new Page<>(pn,pageUtil.getOffSet());
+                Page<ClassAndTeach> page1 = classAndTeachService.page(page, qwr);
+                List<ClassAndTeach> records = page1.getRecords();
+                if(records.size()>0){
+                    for (ClassAndTeach teacherClassAndTeach :records) {
+                        LambdaQueryWrapper<Teacher> teacherQueryWrapper = new LambdaQueryWrapper<>();
+                        Teacher teacher = teacherService.getOne(teacherQueryWrapper.select(Teacher::getTeachNo, Teacher::getTeachName)
+                                .eq(Teacher::getTeachNo, teacherClassAndTeach.getTechNo()));
+                        teacherClassAndTeach.setTeachMessage(teacher);
+                    }
+                    classAndTeachResCode.setMsg("success");
+                    classAndTeachResCode.setPage(page1);
+                    classAndTeachResCode.setStatus(200);
+                }else {
+                    classAndTeachResCode.setMsg("没有数据，请先添加数据");
+                    response.setStatus(403);
+                    classAndTeachResCode.setStatus(response.getStatus());
+                    classAndTeachResCode.setResultSet(null);
+                }
+            }else { //名字不为空
+                if(offset!=0)
+                    pageUtil.setOffSet(offset);
+                Page<ClassAndTeach> page = new Page<>(pn,pageUtil.getOffSet());
+                LambdaQueryWrapper<ClassAndTeach> classAndTeachLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                classAndTeachLambdaQueryWrapper.eq(ClassAndTeach::getClassName,name);
+                ClassAndTeach one = classAndTeachService.getOne(classAndTeachLambdaQueryWrapper);
+                if(one!=null) {
+                    LambdaQueryWrapper<Teacher> teacherLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                    teacherLambdaQueryWrapper.eq(Teacher::getTeachNo, one.getTechNo());
+                    one.setTeachMessage(teacherService.getOne(teacherLambdaQueryWrapper));
+                    classAndTeachResCode.setMsg("success");
+                    classAndTeachResCode.setResultSet(one);
+                    classAndTeachResCode.setStatus(200);
+                }else{
+                    classAndTeachResCode.setMsg("没有此班级");
+                    classAndTeachResCode.setResultSet(null);
+                    classAndTeachResCode.setStatus(403);
+                }
+            }
+        }
+        //resCodeService.selZcClass(pn,offset,name,response)
+        return classAndTeachResCode;
+    }
 
     /**
      * 学生的分页查询
+     *
      *
      * @param pn
      * @param offset
@@ -64,7 +122,7 @@ public class ResCodeServiceImpl implements IResCodeService {
         ResCode<Object> pageUtilResCode = new ResCode<>();
         PageUtil<Student> studentPageUtil = new PageUtil<>();   //分页信息类
 
-        if (pn != 0 || offset != 0) {
+        if (pn != 0 || offset != 0 || !stuName.isEmpty()) {
             if (stuName == null) {
 //                List<Student> list = studentService.list(null);
                 if (offset != 0)
@@ -88,6 +146,9 @@ public class ResCodeServiceImpl implements IResCodeService {
                     pageUtilResCode.setResultSet(null);
                 }
             } else {
+                /**
+                 * 实现根据学生姓名查询学生信息分页
+                 */
                 if (offset != 0)
                     studentPageUtil.setOffSet(offset);
                 IPage<Student> pageUtil = new Page<>(pn, studentPageUtil.getOffSet());
@@ -235,12 +296,14 @@ public class ResCodeServiceImpl implements IResCodeService {
     public ResCode getPageForTeacher(int pn, int offset, String name, HttpServletResponse response) {
         ResCode<Object> pageUtilResCode = new ResCode<>();
         int OFFSET=10;
-        if (pn != 0 || offset != 0) {
+        if (pn != 0 || offset != 0 || !name.isEmpty()) {
             if (name == null) {
                 if (offset == 0)
                     offset=OFFSET;
                 Page<Teacher> teacherPage = new Page<>(pn,offset);
-                IPage<Teacher> iPage1 = teacherService.page(teacherPage); //分页后查找的数据
+                QueryWrapper<Teacher> objectQueryWrapper = new QueryWrapper<>();
+                objectQueryWrapper.orderByDesc("create_time");
+                IPage<Teacher> iPage1 = teacherService.page(teacherPage,objectQueryWrapper); //分页后查找的数据
                 if (iPage1.getRecords().size() > 0) {
                     pageUtilResCode.setMsg("success");
                     pageUtilResCode.setStatus(response.getStatus());
@@ -275,13 +338,18 @@ public class ResCodeServiceImpl implements IResCodeService {
         return pageUtilResCode;
     }
 
+    /**
+     * 添加老师信息
+     * @param teacher
+     * @param response
+     * @return
+     */
     @Override
     public ResCode addForTeacher(Teacher teacher, HttpServletResponse response) {
         String ID = "1";
         String PASSWORD="654321";
         ResCode<Teacher> resCode = new ResCode<>();
-
-        if (teacherService.save(teacher)) {       //添加成功
+        if (teacherService.saveOrUpdate(teacher)) {       //添加成功
             resCode.setStatus(response.getStatus());
             resCode.setMsg("添加成功");
             resCode.setResultSet(null);
@@ -299,6 +367,11 @@ public class ResCodeServiceImpl implements IResCodeService {
         return resCode;
     }
 
+    /**
+     * 根据id删除老师信息
+     * @param id
+     * @return
+     */
     @Override
     public ResCode delTeacherById(Integer id) {
         ResCode<Object> objectResCode = new ResCode<>();
@@ -310,5 +383,69 @@ public class ResCodeServiceImpl implements IResCodeService {
         }
         objectResCode.CodeAll(b,"删除老师成功");
         return objectResCode;
+    }
+
+
+
+    /**
+     * 分页查询班级信息
+     * @param pn
+     * @param offset
+     * @param name
+     * @param response
+     * @return
+     */
+    @Override
+    public ResCode selZcClass(int pn, int offset, String name, HttpServletResponse response) {
+        ResCode<Object> pageUtilResCode = new ResCode<>();
+        PageUtil<ZcClass> pageUtil1 = new PageUtil<>();   //分页信息类
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("create_time");
+        if (pn != 0 || offset != 0 || !name.isEmpty()) {
+            if (name == null) {
+                if (offset != 0)
+                    pageUtil1.setOffSet(offset);
+                IPage<ZcClass> pageUtil = new Page<>(pn, pageUtil1.getOffSet());
+                IPage<ZcClass> iPage1 = zcClassService.page(pageUtil,queryWrapper); //分页后查找的数据
+                if (iPage1.getRecords().size() > 0) {
+                    pageUtilResCode.setMsg("success");
+                    pageUtilResCode.setStatus(response.getStatus());
+                    pageUtilResCode.setResultSet(iPage1);//studentPageUtil
+                } else {
+                    pageUtilResCode.setMsg("没有数据，请先添加数据");
+                    response.setStatus(403);
+                    pageUtilResCode.setStatus(response.getStatus());
+                    pageUtilResCode.setResultSet(null);
+                }
+            } else {
+                /**
+                 * 实现根据学生姓名查询学生信息分页
+                 */
+                if (offset != 0)
+                    pageUtil1.setOffSet(offset);
+                IPage<ZcClass> pageUtil = new Page<>(pn, pageUtil1.getOffSet());
+                LambdaQueryWrapper<ZcClass> lqw = new LambdaQueryWrapper<>();
+                lqw.eq(name != null, ZcClass::getClassName, name);
+                IPage<ZcClass> page = zcClassService.page(pageUtil, lqw);//根据条件获得分页查询数据
+                pageUtilResCode.setMsg("success");
+                pageUtilResCode.setStatus(response.getStatus());
+                pageUtilResCode.setResultSet(page);
+            }
+
+        } else {
+            LambdaQueryWrapper<ZcClass> lqw = new LambdaQueryWrapper<>();
+            lqw.last("order by create_time asc");
+            List<ZcClass> listAll = zcClassService.list(lqw);
+            pageUtil1.setPage((long) pn);//获取当前输出的是第几页
+            pageUtil1.setPages(0l); //一共有几页
+            pageUtil1.setRecords(listAll); //获取查询出来的数据
+            pageUtil1.setTotal(listAll.size());
+            pageUtil1.setOffSet(listAll.size());
+            pageUtilResCode.setMsg("查询所有数据");
+            pageUtilResCode.setStatus(response.getStatus());
+            pageUtilResCode.setResultSet( pageUtil1);
+        }
+
+        return pageUtilResCode;
     }
 }
