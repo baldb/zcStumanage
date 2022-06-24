@@ -39,6 +39,9 @@ import {
   Popconfirm,
   Select,
   Option,
+  Descriptions,
+  DescriptionsItem,
+  Image,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -78,6 +81,9 @@ Vue.use(Upload)
 Vue.use(Popconfirm)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Descriptions)
+Vue.use(DescriptionsItem)
+Vue.use(Image)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

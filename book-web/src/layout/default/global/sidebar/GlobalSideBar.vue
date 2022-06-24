@@ -8,7 +8,7 @@
       ></el-avatar>
       <div>
         {{ getusername }}
-        <el-tag :type="istype" hit style="vertical-align: middle">{{
+        <el-tag :type="indentity | istype" hit style="vertical-align: middle">{{
           indentity | tansiIndentity
         }}</el-tag>
       </div>
@@ -32,7 +32,7 @@
 <script>
 import SiderItem from './SiderItem'
 import { mapGetters } from 'vuex'
-import { IDENT_ENUM } from '@/constant/auth'
+
 export default {
   name: 'sirdebar',
   data() {
@@ -49,39 +49,20 @@ export default {
   },
   computed: {
     ...mapGetters(['getActiveMenu', 'username', 'indentity', 'getuserinfo']),
-    istype() {
-      // 获取状态
-      for (const k in IDENT_ENUM) {
-        if (IDENT_ENUM[k].value === this.indentity) {
-          return IDENT_ENUM[k].status
-        }
-      }
-      return ''
-    },
+
     getusername() {
       if (this?.indentity === 'admin') return this.username
       const isTeachr = this.indentity === 'teacher' ? 'teachName' : 'stuName'
-      return this.getuserinfo[isTeachr]
+      return this.getuserinfo?.[isTeachr]
     },
     getUrl() {
       if (this?.indentity === 'admin')
         return 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
       const isTeachr = this.indentity === 'teacher' ? 'teachPic' : 'pic'
-      return this.hostPath + this.getuserinfo[isTeachr]
+      return this.hostPath + this.getuserinfo?.[isTeachr]
     }
   },
-  mounted() {},
-  filters: {
-    tansiIndentity(value) {
-      const t = {
-        admin: '管理员',
-        teacher: '教师',
-        student: '学生'
-      }
-
-      return t[value]
-    }
-  }
+  mounted() {}
 }
 </script>
 

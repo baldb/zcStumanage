@@ -33,13 +33,13 @@ export default {
     getusername() {
       if (this?.indentity === 'admin') return this.username
       const isTeachr = this.indentity === 'teacher' ? 'teachName' : 'stuName'
-      return this.getuserinfo[isTeachr]
+      return this.getuserinfo?.[isTeachr]
     },
     getUrl() {
       if (this?.indentity === 'admin')
         return 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
       const isTeachr = this.indentity === 'teacher' ? 'teachPic' : 'pic'
-      return this.hostPath + this.getuserinfo[isTeachr]
+      return this.hostPath + this.getuserinfo?.[isTeachr]
     }
   },
   methods: {
