@@ -42,6 +42,10 @@ import {
   Descriptions,
   DescriptionsItem,
   Image,
+  Card,
+  Drawer,
+  MessageBox,
+  CheckboxGroup,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -84,6 +88,10 @@ Vue.use(Option)
 Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
 Vue.use(Image)
+Vue.use(Card)
+Vue.use(Drawer)
+Vue.use(CheckboxGroup)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm

@@ -24,7 +24,22 @@ export const addStudent = async (playload = {}) => {
 export const editStudent = async (playload = {}) => {
   return await axiosInstance('/api/supers/super', 'put', playload)
 }
-//
+//删除学生接口
 export const deleteStudent = async (playload = {}) => {
   return await axiosInstance('/api/supers/super', 'delete', playload)
+}
+
+// 获取学生可选课列表
+export const getCourseNo = async (playload = {}) => {
+  return await axiosInstance('/api/stus/stu/courseNo', 'get', playload)
+}
+
+// 获取学已选课列表
+export const getStuCourse = async (playload = {}) => {
+  return await axiosInstance('/api/stus/stu/course', 'get', playload)
+}
+
+// 添加选课
+export const addStuCourse = async (playload = {}) => {
+  return await axiosInstance('/api/stus/stu/course', 'post', playload)
 }
