@@ -23,4 +23,6 @@ public interface ISourceMapper extends BaseMapper<TSource> {
      */
     Integer addByStuAndCouid(@Param("stuId") Integer stuId, List scList);
 
+
+
 }

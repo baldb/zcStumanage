@@ -1,9 +1,13 @@
 package com.wula.stumanage.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.wula.stumanage.mapper.IStudentMapper;
 import com.wula.stumanage.pojo.Student;
+import com.wula.stumanage.pojo.TSource;
 import com.wula.stumanage.pojo.User;
 import com.wula.stumanage.pojo.utils.ResCode;
+import com.wula.stumanage.service.ISourceService;
 import com.wula.stumanage.service.IStudentService;
 import com.wula.stumanage.service.IUserService;
 import com.wula.stumanage.service.utilservice.IResCodeService;
@@ -45,6 +49,9 @@ public class SuperUserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ISourceService sourceService;
 
     /**
      * 根据页数返回学生信息
@@ -132,5 +139,68 @@ public class SuperUserController {
         ResCode objectResCode = new ResCode();
         objectResCode.CodeAll(name!=null,stuByName);
         return objectResCode;
+    }
+
+    /**
+     * 根据课程id查找该课程的学生信息
+     */
+    @GetMapping("/bycourseId")
+    public ResCode getStudentByCourseId(@RequestParam("courseId") Integer courseId) {
+        return studentService.getStuByCourseId(courseId);
+    }
+
+    /**
+     * 根据课程id，学生ID，成绩，修改学生成绩
+     */
+    @PutMapping("/updatescore")
+    public ResCode getall1(@RequestBody Map map){
+        LambdaUpdateWrapper<TSource> tSourceLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        tSourceLambdaUpdateWrapper.eq(TSource::getCourseId,map.get("courseId"))
+                .eq(TSource::getStuNo,map.get("stuId"))
+                .set(TSource::getScore,map.get("score"));
+        boolean update = sourceService.update(tSourceLambdaUpdateWrapper);
+        ResCode<Object> resCode = new ResCode<>();
+        if(update){
+            resCode.setMsg("添加成功");
+            resCode.setStatus(200);
+        }else {
+            resCode.setMsg("添加失败");
+            resCode.setStatus(403);
+        }
+        return resCode;
+    }
+    /**
+     * 查询没有班级的学生
+     */
+    @GetMapping("/noclass")
+    public ResCode selNoClass(){
+        ResCode<Object> resCode = new ResCode<>();
+        LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        studentLambdaQueryWrapper.isNull(Student::getClassId);
+        List<Student> list = studentService.list(studentLambdaQueryWrapper);
+
+        resCode.setResultSet(list);
+        return resCode;
+    }
+    /**
+     * 查询同班同学，根据该同学的学生id
+     */
+    @Autowired
+    private IStudentMapper studentMapper;
+    @GetMapping("/sameclass")
+    public ResCode selStuByStu(@RequestParam("stuId") Integer stuId,
+                               HttpServletResponse response){
+        ResCode<Object> resCode = new ResCode<>();
+        List<Student> list = studentMapper.getStuByStuId(stuId);
+        if(list.size()>0) {
+            resCode.setResultSet(list);
+            resCode.setMsg("success");
+        }else{
+            resCode.setResultSet(list);
+            response.setStatus(403);
+            resCode.setMsg("没有同班同学");
+            resCode.setStatus(403);
+        }
+        return resCode;
     }
 }

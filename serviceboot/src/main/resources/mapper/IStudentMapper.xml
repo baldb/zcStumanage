@@ -41,4 +41,32 @@ and cou.tech_no=#{teachId}
     <select id="getStuByClassId" resultType="com.wula.stumanage.pojo.Student">
         select * from student where class_id=#{classId}
     </select>
+
+    <resultMap id="StuByClassIdIdMap" type="com.wula.stumanage.pojo.Student">
+        <id property="stuNo" column="stu_no" jdbcType="INTEGER"/>
+        <result property="stuName" column="stu_name" jdbcType="VARCHAR"/>
+        <result property="Sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="Phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="Email" column="email" jdbcType="VARCHAR"/>
+        <result property="Birth" column="birth" jdbcType="DATE"/>
+        <result property="Address" column="address" jdbcType="VARCHAR"/>
+        <result property="Pic" column="pic" jdbcType="VARCHAR"/>
+        <result property="classId" column="class_id" jdbcType="INTEGER"/>
+        <result property="enroTime" column="enro_time" jdbcType="DATE"/>
+        <association property="sourceS" javaType="com.wula.stumanage.pojo.TSource">
+            <id property="stuNo" column="stu_no" jdbcType="INTEGER"/>
+            <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="score" column="score" jdbcType="FLOAT"/>
+        </association>
+    </resultMap>
+    <select id="getStuByCourseId" resultMap="StuByClassIdIdMap">
+    select score,student.stu_no,stu_name,sex,phone,email,birth,address,pic,class_id,enro_time
+    from student,source where student.stu_no=source.stu_no
+    and course_id=#{courseId}
+</select>
+
+
+    <select id="getStuByStuId" resultType="com.wula.stumanage.pojo.Student">
+        select  * from student where class_id=(select class_id from student where stu_no=#{stuId})
+    </select>
 </mapper>

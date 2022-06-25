@@ -100,4 +100,20 @@ public class StudentServiceImpl extends ServiceImpl<IStudentMapper, Student> imp
         resCode.setResultSet(null);
         return resCode;
     }
+
+    @Override
+    public ResCode getStuByCourseId(Integer courseId) {
+        ResCode<Object> resCode = new ResCode<>();
+        List<Student> stuByCourseId = studentMapper.getStuByCourseId(courseId);
+        if(stuByCourseId.size()>0){
+            resCode.setStatus(200);
+            resCode.setMsg("success");
+            resCode.setResultSet(stuByCourseId);
+        }else {
+            resCode.setStatus(200);
+            resCode.setMsg("该课程还未有学生选择");
+            resCode.setResultSet(stuByCourseId);
+        }
+        return resCode;
+    }
 }
