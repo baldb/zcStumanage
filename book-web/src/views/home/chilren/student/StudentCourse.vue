@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 .b {
-  flex-basis: 400px;
+  flex-basis: 500px;
 }
 .text {
   font-size: 16px;

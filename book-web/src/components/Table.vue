@@ -5,6 +5,7 @@
       :data="tableData"
       :style="{ width: width }"
       v-loading="loading"
+      :height="height"
     >
       <el-table-column
         v-for="item in header"
@@ -22,7 +23,7 @@
           }}</slot>
         </template>
       </el-table-column>
-      <el-table-column label="操作" v-if="isEdit" fixed="right">
+      <el-table-column :label="editText" v-if="isEdit" fixed="right">
         <template slot-scope="scope">
           <slot name="edit" :edit="scope.row">
             <el-button
@@ -62,6 +63,8 @@ export default {
   components: { MyPagination },
   props: {
     header: { type: Array, require: true, default: () => [] },
+    editText: { type: String, require: true, default: '操作' },
+    height: { type: Number, default: 400 },
     tableData: { type: Array, require: true, default: () => [] },
     isEdit: { type: Boolean, default: true },
     loading: { type: Boolean, default: false },

@@ -46,6 +46,7 @@ import {
   Drawer,
   MessageBox,
   CheckboxGroup,
+  Empty,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -91,6 +92,7 @@ Vue.use(Image)
 Vue.use(Card)
 Vue.use(Drawer)
 Vue.use(CheckboxGroup)
+Vue.use(Empty)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

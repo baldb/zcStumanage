@@ -12,3 +12,9 @@ export const addCourse = async (playload = {}) =>
 
 export const deleteCourse = async (playload = {}) =>
   await axiosInstance('/api/supers/course', 'delete', playload)
+
+export const getCourseStu = async (playload = {}) =>
+  await axiosInstance('/api/supers/bycourseId', 'get', playload)
+
+export const updateScore = async (playload = {}) =>
+  await axiosInstance('/api/supers/updatescore', 'put', playload)

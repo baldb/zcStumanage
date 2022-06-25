@@ -18,7 +18,12 @@
           {{ (row.teachMessage && row.teachMessage['teachName']) || '-' }}
         </template>
         <template #edit="{ edit }">
-          <el-button type="primary" size="mini">查看</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="selectClass(edit.classId)"
+            >查看</el-button
+          >
           <el-button
             size="mini"
             @click="handleEdit(edit, true)"
@@ -40,7 +45,9 @@
         </template>
       </my-table>
     </div>
-    <div class="class-stu__box"><show-class-stu></show-class-stu></div>
+    <div class="class-stu__box">
+      <show-class-stu :classId="selectId"></show-class-stu>
+    </div>
     <edit-and-creaye-class
       :visible.sync="visiableForm"
       @success="editSuccess"
@@ -59,7 +66,7 @@ import { getClass, deleteClass } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 
 export default {
-  name: 'Classmange',
+  name: 'classmange',
   components: { MyTable, editAndCreayeClass, showClassStu },
   data() {
     return {
@@ -67,7 +74,8 @@ export default {
       tableData: {},
       visiableForm: false,
       isEdit: false,
-      row: {} // 保存选中行
+      row: {}, // 保存选中行
+      selectId: null // 选中的班级id
     }
   },
   mixins: [myTableMixin],
@@ -102,7 +110,6 @@ export default {
     },
 
     async handleDelete(row) {
-      console.log(row)
       if (!row.classId) return
       try {
         await deleteClass({ classId: row.classId })
@@ -111,6 +118,7 @@ export default {
         const lat = this.tableData.records.length === 1 && this.page !== 1
         // 如果是最后一条数据页码返回上一页
         lat && (this.page = this.page - 1)
+        this.selectId === row.classId && (this.selectId = null)
         await this.getClassList()
       } catch (error) {
         this.$message.error('删除失败！！')
@@ -118,6 +126,9 @@ export default {
     },
     handleCurrentChange(val) {
       console.log('val', val)
+    },
+    selectClass(classId) {
+      this.selectId = classId
     }
   },
   watch: {
@@ -134,7 +145,7 @@ export default {
   padding: 20px 20px 0;
   box-sizing: border-box;
   display: flex;
-  height: 80%;
+  height: 90%;
   align-items: center;
 }
 .Class-table__box {

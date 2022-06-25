@@ -4,7 +4,7 @@
       :courses="courseList"
       @success="addSuccess"
     ></student-course>
-    <dashboard></dashboard>
+    <!-- <dashboard></dashboard> -->
   </div>
 </template>
 
@@ -49,5 +49,6 @@ export default {
   padding: 10px;
   height: 500px;
   align-items: center;
+  justify-content: center;
 }
 </style>
