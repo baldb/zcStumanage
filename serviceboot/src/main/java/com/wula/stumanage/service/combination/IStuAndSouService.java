@@ -1,4 +1,4 @@
-package com.wula.stumanage.service.avo;
+package com.wula.stumanage.service.combination;
 
 import com.wula.stumanage.pojo.votest.StuAndSou;
 

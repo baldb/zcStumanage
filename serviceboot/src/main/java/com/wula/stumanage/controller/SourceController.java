@@ -1,13 +1,10 @@
 package com.wula.stumanage.controller;
 
-import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
+import com.wula.stumanage.pojo.combination.StudentAndSource;
 import com.wula.stumanage.pojo.utils.ResCode;
 import com.wula.stumanage.service.IStudentAndSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author 林逸
@@ -35,4 +32,8 @@ public class SourceController {
         studentAndSourceResCode.CodeAll(stuAndSouByNo!=null,stuAndSouByNo);
         return studentAndSourceResCode;
     }
+
+    /**
+     *
+     */
 }

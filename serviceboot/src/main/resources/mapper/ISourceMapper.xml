@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wula.stumanage.mapper.ISourceMapper">
+
+<!--
+collection:代表传入的类型，这边为集合
+ item：即类型中的每一项名
+-->
+    <insert id="addByStuAndCouid" parameterType="java.util.List">
+        insert into source(stu_no,course_id)
+        values
+        <foreach collection="list" item="courseID" index="index" separator=",">
+        (
+        #{stuId},
+        #{courseID}
+            )
+        </foreach>
+    </insert>
+
+<!--    <insert id="batchInsertProductCategory" parameterType="java.util.List">-->
+<!--        INSERT INTO-->
+<!--        tb_product_category(product_category_name,priority,shop_id)-->
+<!--        VALUES-->
+<!--        <foreach collection="list" item="productCategory" index="index" separator=",">-->
+<!--            (-->
+<!--            #{productCategory.productCategoryName},-->
+<!--            #{productCategory.priority},-->
+<!--            #{productCategory.shopId}-->
+<!--            )-->
+<!--        </foreach>-->
+<!--    </insert>-->
+
+
+</mapper>

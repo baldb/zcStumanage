@@ -11,6 +11,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc.url=jdbc:mysql://localhost:3306/MyBatis?
       url: jdbc:mysql://192.168.137.1:3306/student_admin?characterEncoding=utf8&useSSL=false&serverTimezone=CTT&rewriteBatchedStatements=true
       username: root
       password: root
@@ -26,8 +27,9 @@ spring:
     time-zone: GMT+8
 #id自增策略
 mybatis-plus:
-  global-config:
-    db-config:
-      id-type: auto
+#  global-config:
+#    db-config:
+#      id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出在控制台上   打开mybatis-plus日志
+    jdbc-type-for-null: 'null' #设置字段为null值

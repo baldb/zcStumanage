@@ -49,7 +49,9 @@ public class SuperUserController {
     /**
      * 根据页数返回学生信息
      * 诺没有返回页数和页面输出几条数据的数据  则返回学生全部信息
-     * @param pn
+     * @param stuname：根据学生姓名查询学生信息
+     * @param pn：输出的页数为第几页
+     * @param offset ：每页输出条数
      * @param response
      * @return
      */

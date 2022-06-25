@@ -55,4 +55,11 @@ public class Student {
      * 修改日期
      */
     private Date updateTime;
+
+    @TableField(exist = false)
+    private Course course;
+    @TableField(exist = false)
+    private ZcClass zxClass;
+    @TableField(exist = false)
+    private TSource sourceS;
 }

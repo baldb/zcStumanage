@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wula.stumanage.mapper.IStudentMapper">
+
+
+    <resultMap id="StuByTeachIdMap" type="com.wula.stumanage.pojo.Student">
+        <id property="stuNo" column="stu_no" jdbcType="INTEGER"/>
+        <result property="stuName" column="stu_name" jdbcType="VARCHAR"/>
+        <result property="Sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="Pic" column="pic" jdbcType="VARCHAR"/>
+        <result property="classId" column="class_id" jdbcType="INTEGER"/>
+        <association property="course" javaType="com.wula.stumanage.pojo.Course">
+            <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+        </association>
+        <association property="zxClass" javaType="com.wula.stumanage.pojo.ZcClass">
+            <id property="classId" column="class_id" jdbcType="INTEGER"/>
+            <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        </association>
+        <association property="sourceS" javaType="com.wula.stumanage.pojo.TSource">
+            <id property="stuNo" column="stu_no" jdbcType="INTEGER"/>
+            <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="score" column="score" jdbcType="FLOAT"/>
+        </association>
+    </resultMap>
+    <select id="getAllByTeach" resultMap="StuByTeachIdMap">
+    select
+course_name,class_name,stu.stu_no,stu_name,
+stu.sex,pic,stu.class_id,
+score
+from course cou,zc_class zc,source sou,student stu
+where
+cou.course_id=sou.course_id
+and sou.stu_no=stu.stu_no
+and stu.class_id=zc.class_id
+and cou.tech_no=#{teachId}
+
+</select>
+    <select id="getStuByClassId" resultType="com.wula.stumanage.pojo.Student">
+        select * from student where class_id=#{classId}
+    </select>
+</mapper>

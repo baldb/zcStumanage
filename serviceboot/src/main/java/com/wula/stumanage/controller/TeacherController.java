@@ -50,6 +50,7 @@ public class TeacherController {
     @PostMapping("/teacher")
     public ResCode addTeacher(@RequestBody Teacher teacher,
                               HttpServletResponse response){
+        System.out.println(teacher);
         return resCodeService.addForTeacher(teacher,response);
     }
 
@@ -68,8 +69,7 @@ public class TeacherController {
      * 删除老师信息
      */
     @DeleteMapping("/teacher")
-    public ResCode delTeacher(@RequestParam("id") Integer id,
-                              HttpServletResponse response){
-        return resCodeService.delTeacherById(id);
+    public ResCode delTeacher(@RequestParam("teachNo") Integer teachNo){
+        return resCodeService.delTeacherById(teachNo);
     }
 }

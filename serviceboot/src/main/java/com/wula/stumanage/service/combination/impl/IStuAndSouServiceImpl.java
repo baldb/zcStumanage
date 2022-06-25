@@ -1,8 +1,8 @@
-package com.wula.stumanage.service.avo.impl;
+package com.wula.stumanage.service.combination.impl;
 
 import com.wula.stumanage.mapper.votest.IStuAndSouMapper;
 import com.wula.stumanage.pojo.votest.StuAndSou;
-import com.wula.stumanage.service.avo.IStuAndSouService;
+import com.wula.stumanage.service.combination.IStuAndSouService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

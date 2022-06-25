@@ -1,7 +1,7 @@
 package com.wula.stumanage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
+import com.wula.stumanage.pojo.combination.StudentAndSource;
 
 /**
  * @author 林逸

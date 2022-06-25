@@ -1,5 +1,6 @@
 package com.wula.stumanage.pojo.utils;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ public class ResCode<T> {
     private Integer Status;
     private String msg;
     private T ResultSet;
+    private Page<T> page;
 
     public  void CodeAll(Boolean res,T o){
         if(res){

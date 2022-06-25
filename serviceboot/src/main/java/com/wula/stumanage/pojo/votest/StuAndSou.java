@@ -1,7 +1,6 @@
 package com.wula.stumanage.pojo.votest;
 
 import com.wula.stumanage.pojo.Student;
-import com.wula.stumanage.pojo.stuAndsou.StudentAndSource;
 import lombok.Data;
 
 import java.util.Date;

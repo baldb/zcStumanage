@@ -15,8 +15,8 @@ import java.util.Date;
 @Data
 @TableName("teacher")
 public class Teacher {
-    @TableId(value = "teach_no",type = IdType.AUTO)
-    private long teachNo;
+    @TableId(value = "teach_no")
+    private Integer teachNo;
     private String Sex;
     private Integer Age;
     private String teachName;

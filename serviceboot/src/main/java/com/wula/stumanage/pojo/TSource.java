@@ -20,7 +20,7 @@ import java.util.Date;
 @Data
 @TableName("source")
 public class TSource {
-    @TableId(value = "stu_no",type = IdType.AUTO)
+    @TableId(value = "stu_no")
     private Integer stuNo;
 //    @TableId(value = "course_id")
     private Integer courseId;
