@@ -33,6 +33,7 @@ public interface IStudentService extends IService<Student> {
      * 根据班级id查找该班的学生
      */
     ResCode selStudentByClassId(Integer classId);
+
     /**
      * 添加学生到该班级id为ID的班级中
      */
@@ -42,4 +43,9 @@ public interface IStudentService extends IService<Student> {
      * 根据学号移除该班学号为此学号的学生，将class_id设置为null
      */
     ResCode delStudentForClass(Integer stuNo);
+
+    /**
+     * 根据课程id去查询学生的信息
+     */
+    ResCode getStuByCourseId(Integer courseId);
 }

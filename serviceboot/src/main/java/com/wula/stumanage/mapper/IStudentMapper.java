@@ -28,4 +28,18 @@ public interface IStudentMapper extends BaseMapper<Student>{
      * @return
      */
     List<Student> getStuByClassId(@Param("classId")Integer classId);
+
+    /**
+     * 根据课程id查询该课程学生
+     * @param courseId
+     * @return
+     */
+    List<Student> getStuByCourseId(@Param("courseId")Integer courseId);
+
+
+    /**
+     * 根据学生id查找同班同学
+     */
+    List<Student> getStuByStuId(@Param("stuId")Integer stuId);
+
 }
