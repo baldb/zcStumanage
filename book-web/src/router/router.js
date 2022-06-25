@@ -74,12 +74,12 @@ const asyncRouter = [
             meta: { title: '同班同学' },
             component: () => import('@/views/student/Classmate'),
           },
-          {
-            path: 'askleave', // 请假条
-            name: 'askleave',
-            component: () => import('@/views/student/Askleave'),
-            meta: { title: '请假条', showBadge: true },
-          },
+          // {
+          //   path: 'askleave', // 请假条
+          //   name: 'askleave',
+          //   component: () => import('@/views/student/Askleave'),
+          //   meta: { title: '请假条', showBadge: true },
+          // },
         ],
       },
       {
@@ -99,12 +99,12 @@ const asyncRouter = [
             meta: { title: '学生列表' },
           },
 
-          {
-            path: 'askleaveinfo', // 请假列表
-            name: 'askleaveinfo',
-            component: () => import('@/views/teacher/akleaveinfo'),
-            meta: { title: '请假列表', showBadge: true },
-          },
+          // {
+          //   path: 'askleaveinfo', // 请假列表
+          //   name: 'askleaveinfo',
+          //   component: () => import('@/views/teacher/akleaveinfo'),
+          //   meta: { title: '请假列表', showBadge: true },
+          // },
         ],
       },
       // {
@@ -141,16 +141,16 @@ const asyncRouter = [
         component: () => import('@/views/admin/course/courseMange'),
         meta: { title: '课程管理', role: [IDENT_ENUM[0].value] },
       },
-      {
-        path: 'askleaveinfo', // 请假列表
-        name: 'askleaveinfo',
-        component: () => import('@/views/teacher/akleaveinfo'),
-        meta: {
-          title: '请假列表',
-          showBadge: true,
-          role: [IDENT_ENUM[0].value],
-        },
-      },
+      // {
+      //   path: 'askleaveinfo', // 请假列表
+      //   name: 'askleaveinfo',
+      //   component: () => import('@/views/teacher/akleaveinfo'),
+      //   meta: {
+      //     title: '请假列表',
+      //     showBadge: true,
+      //     role: [IDENT_ENUM[0].value],
+      //   },
+      // },
       //   ],
       // },
     ],

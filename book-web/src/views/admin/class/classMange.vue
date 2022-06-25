@@ -40,6 +40,7 @@
         </template>
       </my-table>
     </div>
+    <div class="class-stu__box"><show-class-stu></show-class-stu></div>
     <edit-and-creaye-class
       :visible.sync="visiableForm"
       @success="editSuccess"
@@ -53,12 +54,13 @@
 import column from './column'
 import MyTable from '@/components/Table'
 import editAndCreayeClass from './editAndCreayeClass.vue'
+import showClassStu from './showClassStu.vue'
 import { getClass, deleteClass } from '@/api'
 import myTableMixin from '@/mixin/myTableMixin'
 
 export default {
   name: 'Classmange',
-  components: { MyTable, editAndCreayeClass },
+  components: { MyTable, editAndCreayeClass, showClassStu },
   data() {
     return {
       header: column,
@@ -113,6 +115,9 @@ export default {
       } catch (error) {
         this.$message.error('删除失败！！')
       }
+    },
+    handleCurrentChange(val) {
+      console.log('val', val)
     }
   },
   watch: {
@@ -126,15 +131,26 @@ export default {
 
 <style scoped>
 .container {
-  padding: 20px 0 0;
+  padding: 20px 20px 0;
   box-sizing: border-box;
+  display: flex;
+  height: 80%;
+  align-items: center;
 }
 .Class-table__box {
-  margin: 0 auto;
-  max-width: 90%;
+  /* margin: 0 auto; */
+  max-width: 45%;
   overflow: hidden;
 }
 .add-btn {
   margin-bottom: 10px;
+  margin-left: 2%;
+}
+.class-stu__box {
+  flex: 1;
+  height: 100%;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 10px 4px #ccc inset;
+  margin-left: 10px;
 }
 </style>
