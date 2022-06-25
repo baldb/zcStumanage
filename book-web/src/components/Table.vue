@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 .table-box {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .table-box .el-table {

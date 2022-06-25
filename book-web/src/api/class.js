@@ -27,3 +27,6 @@ export const delcalssstu = async (playload = {}) =>
 
 export const noclass = async (playload = {}) =>
   await axiosInstance('/api/supers/noclass', 'get', playload)
+
+export const getSameClass = async (playload = {}) =>
+  await axiosInstance('/api/supers/sameclass', 'get', playload)
